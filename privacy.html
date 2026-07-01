@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Datenschutz &ndash; DANERS&rsquo;</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+:root{--black:#111;--white:#ffffff;--cream:#f8f7f4;--tan:#d4a574;--sage:#7a9e7e;--gray:#888;--border:#e0e0e0;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;font-weight:300;background:#fff;color:var(--black);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
+
+/* NAV — no bottom border */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:15px 40px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:none;}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:6px;cursor:pointer;background:none;border:none;padding:4px;width:32px;height:32px;flex-shrink:0;}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--black);transition:transform .3s,opacity .3s;transform-origin:center;}
+.hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.lang-switcher{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,.05);border-radius:20px;padding:3px 4px;}
+.lang-btn{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 10px;border:none;cursor:pointer;border-radius:16px;background:transparent;color:var(--gray);transition:all .2s;}
+.lang-btn.active{background:var(--black);color:#fff;}
+.lang-btn:hover:not(.active){color:var(--black);}
+.nav-social{display:flex;gap:16px;align-items:center;}
+.nav-social a{color:var(--black);text-decoration:none;display:flex;align-items:center;transition:opacity .2s;}
+.nav-social a:hover{opacity:.4;}
+
+/* OVERLAY */
+.overlay-menu{display:none;position:fixed;inset:0;z-index:199;background:#fff;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+.overlay-menu.open{display:flex;}
+.overlay-menu>a{font-size:clamp(22px,4.5vw,36px);font-weight:700;text-decoration:none;color:var(--black);text-transform:uppercase;letter-spacing:-.5px;padding:10px 0;position:relative;}
+.overlay-menu>a::after{content:'';position:absolute;bottom:6px;left:50%;right:50%;height:2px;background:var(--black);transition:left .25s,right .25s;}
+.overlay-menu>a:hover::after{left:0;right:0;}
+.nav-item{cursor:pointer;text-align:center;}
+.nav-item-label{font-size:clamp(22px,4.5vw,36px);font-weight:700;text-transform:uppercase;letter-spacing:-.5px;padding:10px 0;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--black);user-select:none;}
+.nav-item-label svg{transition:transform .25s;flex-shrink:0;}
+.nav-item.open .nav-item-label svg{transform:rotate(180deg);}
+.nav-dropdown{display:none;flex-direction:column;align-items:center;gap:4px;padding:4px 0 8px;}
+.nav-item.open .nav-dropdown{display:flex;}
+.nav-dropdown a{font-size:clamp(14px,3vw,20px);font-weight:400;text-decoration:none;color:var(--gray);padding:6px 28px;border-radius:4px;transition:color .2s,background .2s;}
+.nav-dropdown a:hover{color:var(--black);background:rgba(0,0,0,.05);}
+
+/* CART — no glow, just the image */
+.cart-img{width:100%;height:auto;display:block;}
+
+/* LAYOUT */
+main {
+  flex: 1;
+  padding-top: 60px;
+}
+
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 48px 64px;
+}
+
+/* ── NEW STICKY WRAPPER FOR THE TITLE ── */
+.sticky-title-container {
+  position: sticky;
+  top: 56px;               /* Locks right beneath your fixed navigation background */
+  z-index: 100;            /* Stays stacked over the scrolling paragraphs */
+  background: #ffffff;     /* Solid color stops text from rendering behind it */
+  width: 100%;             /* Spans across full viewport width */
+  text-align: center;      /* Keeps title text horizontally structured */
+  padding: 24px 0 10px 0;  /* Controls space above/below title when stuck */
+}
+
+/* ── MODIFIED CURRENT STYLES ── */
+.section-label {
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: clamp(28px,5vw,52px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 22px;
+}
+
+.divider {
+  width: 36px;
+  height: 1.5px;
+  background: var(--black);
+  margin: 0 auto 26px auto; /* Centers the accent bar underneath the title text */
+}
+
+/* ── REST OF YOUR EXISTING LAYOUT ── */
+.cart-outer { width: 100%; max-width: 520px; }
+.cart-sm { width: 100%; max-width: 360px; }
+.content-wide { width: 100%; max-width: 860px; margin-top: 48px; }
+.content-mid { width: 100%; max-width: 640px; margin-top: 12px; } /* Slightly lowered margin due to sticky header internal padding */
+
+/* BUTTONS */
+.btn{display:inline-block;padding:13px 32px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:all .2s;}
+.btn-primary{background:var(--black);color:#fff;}
+.btn-primary:hover{background:#333;}
+.btn-outline{background:transparent;color:var(--black);border:1.5px solid var(--black);}
+.btn-outline:hover{background:var(--black);color:#fff;}
+
+/* MENU IMAGE */
+.menu-img-wrap{width:100%;max-width:900px;margin:0 auto;}
+.menu-img-wrap img{width:100%;height:auto;display:block;border-radius:10px;box-shadow:0 12px 50px rgba(0,0,0,.1);}
+
+/* LOCATION PAGES */
+.location-hero{width:100%;padding:48px 0 28px;text-align:center;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px;}
+.info-card{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:28px;}
+.info-card h3{font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px;color:var(--gray);}
+.info-card p{font-size:14px;line-height:1.9;color:#333;}
+.info-card strong{color:var(--black);}
+.location-coming{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:44px 32px;text-align:center;margin-top:28px;}
+.location-coming h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+.location-coming p{font-size:14px;color:var(--gray);line-height:1.8;}
+
+/* FORMS */
+.contact-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:36px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.contact-tabs::-webkit-scrollbar{display:none;}
+.tab-btn{padding:12px 18px;font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;color:var(--gray);white-space:nowrap;transition:all .2s;margin-bottom:-1px;flex-shrink:0;}
+.tab-btn.active{color:var(--black);border-bottom-color:var(--black);}
+.tab-btn:hover:not(.active){color:var(--black);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.span2{grid-column:1/-1;}
+.form-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);}
+.form-input,.form-textarea,.form-select{font-family:'Poppins',sans-serif;font-size:14px;font-weight:300;padding:10px 0;background:none;border:none;border-bottom:1.5px solid var(--border);color:var(--black);outline:none;transition:border-color .2s;width:100%;-webkit-appearance:none;border-radius:0;}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-bottom-color:var(--black);}
+.form-textarea{resize:vertical;min-height:96px;line-height:1.6;}
+.form-select{cursor:pointer;background:transparent;}
+.form-consent{display:flex;align-items:flex-start;gap:12px;margin:20px 0;font-size:13px;color:#555;line-height:1.6;}
+.form-consent input[type="checkbox"]{margin-top:3px;flex-shrink:0;accent-color:var(--black);width:16px;height:16px;cursor:pointer;}
+.form-submit{display:inline-block;padding:13px 36px;background:var(--black);color:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;-webkit-appearance:none;border-radius:0;}
+.form-submit:hover{background:#333;}
+.form-success{display:none;padding:14px 18px;background:#f0faf0;border-left:3px solid #4caf50;font-size:13px;color:#1b5e20;margin-top:14px;line-height:1.6;}
+
+/* FOOTER */
+footer{background:#fff;color:var(--black);padding:24px 48px 28px;border-top:1px solid var(--border);margin-top:auto;}
+
+
+@media(max-width:900px){
+  nav{padding:13px 20px;}
+  .page-wrap{padding:0 24px 52px;}
+  footer{padding:24px 24px 24px;}
+  .info-grid{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  footer{padding:20px 20px 20px;}
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.span2{grid-column:1;}
+  .tab-btn{padding:11px 12px;font-size:10px;}
+}
+@media(max-width:600px){
+  nav{padding:12px 16px;}
+  .page-wrap{padding:0 16px 44px;}
+  .section-title{letter-spacing:-1px;}
+  .form-submit{width:100%;text-align:center;}
+}
+
+
+.footer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+  font-size:12px;
+  color:rgba(0,0,0,.45);
+  letter-spacing:.02em;
+}
+.footer-legal{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.footer-legal a{
+  color:rgba(0,0,0,.55);
+  text-decoration:underline;
+  text-decoration-color:rgba(0,0,0,.25);
+  transition:color .2s;
+  white-space:nowrap;
+}
+.footer-legal a:hover{color:var(--black);}
+.footer-copy{
+  white-space:nowrap;
+  margin-left:auto;
+  text-align:right;
+}
+@media(max-width:600px){
+  .footer-bottom{
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    text-align:center;
+  }
+  .footer-copy{
+    margin-left:0;
+    text-align:center;
+  }
+  .footer-legal{
+    justify-content:center;
+    gap:14px;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+    ISEMARKT / SUSI — Dumbo-style sticky hero page
+═══════════════════════════════════════════════ */
+.loc-hero-fixed{
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  width:100%; height:100vh;
+  z-index:1;
+  overflow:hidden;
+}
+.loc-hero-fixed img{
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:center 30%;
+  display:block;
+}
+.loc-hero-fixed::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 60%, rgba(0,0,0,.35) 100%);
+  pointer-events:none;
+}
+.loc-hero-title{
+  position:absolute;
+  top:50%; left:0; right:0;
+  transform:translateY(-50%);
+  text-align:center;
+  z-index:2;
+  pointer-events:none;
+}
+.loc-hero-title h1{
+  font-size:clamp(54px,11vw,150px);
+  font-weight:900;
+  letter-spacing:-3px;
+  color:#fff;
+  text-shadow:0 4px 30px rgba(0,0,0,.35);
+  line-height:1;
+  margin:0;
+}
+.loc-hero-title p{
+  font-size:13px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.92);
+  margin-top:14px;
+  text-shadow:0 2px 12px rgba(0,0,0,.4);
+}
+/* Spacer that pushes scrollable content below the full viewport-height hero */
+.loc-hero-spacer{
+  height:100vh;
+  width:100%;
+}
+/* The actual content card that scrolls up and over the fixed hero */
+.loc-content-panel{
+  position:relative;
+  z-index:3;
+  background:#fff;
+  border-radius:28px 28px 0 0;
+  margin-top:-28px;
+  padding:48px 32px 0;
+  box-shadow:0 -20px 60px rgba(0,0,0,.15);
+}
+.loc-content-inner{
+  max-width:860px;
+  margin:0 auto;
+  padding-bottom:40px;
+}
+
+@media(max-width:768px){
+  .loc-hero-title h1{letter-spacing:-2px;}
+  .loc-content-panel{padding:36px 22px 0;border-radius:22px 22px 0 0;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="de">DE</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <div class="nav-social">
+      <a href="https://www.instagram.com/danersbeefbread?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://www.tiktok.com/@daners_beefbread?_r=1&_t=ZS-96MZFXNPeF8" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+     <a href="https://open.spotify.com/user/31u5ibsrqur55jybbsljsm7suoyu?si=VGXnb-StS5Gnb2uL0RIUCg" target="_blank" rel="noopener" aria-label="Spotify"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 1 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257C14.1 12.266 10.539 11.88 7.24 12.854a.78.78 0 0 1-.453-1.49c3.757-1.142 7.708-.588 10.765 1.266a.78.78 0 0 1 .257 1.072zm.105-2.835C14.69 9.15 9.948 8.994 7.188 9.843a.936.936 0 1 1-.543-1.79c3.181-.967 8.47-.78 11.81 1.17a.936.936 0 0 1-.541 1.644z"/></svg></a>
+    </div>
+  </div>
+</nav>
+<div class="overlay-menu" id="overlayMenu">
+  <a href="index.html" data-i18n="fhome">Home</a>
+  <a href="menu.html" data-i18n="nav-menu">Men&uuml;</a>
+  <div class="nav-item" id="navLocItem">
+    <div class="nav-item-label"><span data-i18n="nav-locations">Locations</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="nav-dropdown">
+      <a href="isemarkt.html" data-i18n="nav-isemarkt">Isemarkt</a>
+      <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
+    </div>
+  </div>
+  <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
+  <a href="contact.html" data-i18n="nav-contact">Kontakt</a>
+    <a href="about.html" data-i18n="nav-about">About Us</a>
+</div>
+<main><div class="page-wrap" style="padding-top:56px;">
+
+  <!-- Title block remains centered and pins smoothly under the navigation bar -->
+  <div class="sticky-title-container">
+    <p class="section-label" data-i18n="privacy-label">Rechtliches</p>
+    <h2 class="section-title" data-i18n="privacy-title">Datenschutzerkl&auml;rung</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="content-mid">
+    <div style="font-size:14px;line-height:1.9;color:#333;">
+
+      <p style="margin-bottom:18px;font-size:16px;"><strong data-i18n="pr-s1-title">1. Datenschutz auf einen glance</strong></p>
+      <p><strong data-i18n="pr-s1a-title">Allgemeine Hinweise</strong><br data-i18n-skip>
+      <span data-i18n="pr-s1a-text">Die folgenden Hinweise geben einen einfachen &Uuml;berblick dar&uuml;ber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie pers&ouml;nlich identifiziert werden k&ouml;nnen.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s1b-title">Wer ist verantwortlich f&uuml;r die Datenerfassung auf dieser Website?</strong><br>
+      <span data-i18n="pr-s1b-text">Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten finden Sie im Abschnitt &bdquo;Hinweis zur verantwortlichen Stelle&ldquo; dieser Datenschutzerkl&auml;rung.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s1c-title">Wie erfassen wir Ihre Daten?</strong><br>
+      <span data-i18n="pr-s1c-text">Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen, z.&nbsp;B. durch Eingabe in unser Kontaktformular. Andere Daten werden automatisch beim Besuch der Website durch unsere IT-Systeme erfasst (z.&nbsp;B. Browser, Betriebssystem, Uhrzeit des Seitenaufrufs).</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s1d-title">Welche Rechte haben Sie bez&uuml;glich Ihrer Daten?</strong><br>
+      <span data-i18n="pr-s1d-text">Sie haben jederzeit das Recht, unentgeltlich Auskunft &uuml;ber Herkunft, Empf&auml;nger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben au&szlig;erdem ein Recht, die Berichtigung, Sperrung oder L&ouml;schung dieser Daten zu verlangen. Hierzu sowie zu weiteren Fragen k&ouml;nnen Sie sich jederzeit an uns wenden.</span></p>
+
+      <p style="margin-top:28px;font-size:16px;"><strong data-i18n="pr-s2-title">2. Hosting</strong></p>
+      <p><span data-i18n="pr-s2-text">Wir hosten die Inhalte unserer Website bei einem externen Dienstleister (Hoster). Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es sich v.&nbsp;a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten handeln, die &uuml;ber eine Website generiert werden.</span></p>
+
+      <p style="margin-top:28px;font-size:16px;"><strong data-i18n="pr-s3-title">3. Allgemeine Hinweise und Pflichtinformationen</strong></p>
+      <p><strong data-i18n="pr-s3a-title">Datenschutz</strong><br>
+      <span data-i18n="pr-s3a-text">Die Betreiber dieser Seiten nehmen den Schutz Ihrer pers&ouml;nlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerkl&auml;rung.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s3b-title">Hinweis zur verantwortlichen Stelle</strong><br>
+      <span data-i18n="pr-s3b-text">Die verantwortliche Stelle f&uuml;r die Datenverarbeitung auf dieser Website ist:</span></p>
+      <p style="margin-top:8px;">
+        DANERS - Beef & Bread<br>
+        Schinkelstraße 25<br>
+        22303 Hamburg<br><br>
+        <span data-i18n="pr-phone-label">Telefon:</span> +49 172 7977711<br>
+        E-Mail: <a href="mailto:Daners@beef-bread.de" style="color:var(--black);">Daners@beef-bread.de</a>
+      </p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s3c-title">Speicherdauer</strong><br>
+      <span data-i18n="pr-s3c-text">Soweit innerhalb dieser Datenschutzerkl&auml;rung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck f&uuml;r die Datenverarbeitung entf&auml;llt. Wenn Sie ein berechtigtes L&ouml;schersuchen geltend machen oder Ihre Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gel&ouml;scht, sofern wir keine anderen rechtlich zul&auml;ssigen Gr&uuml;nde f&uuml;r die Speicherung Ihrer personenbezogenen Daten haben.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s3d-title">Widerruf Ihrer Einwilligung zur Datenverarbeitung</strong><br>
+      <span data-i18n="pr-s3d-text">Viele Datenverarbeitungsvorg&auml;nge sind nur mit Ihrer ausdr&uuml;cklichen Einwilligung m&ouml;glich. Sie k&ouml;nnen eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtm&auml;&szlig;igkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unber&uuml;hrt.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s3e-title">Beschwerderecht bei der zust&auml;ndigen Aufsichtsbeh&ouml;rde</strong><br>
+      <span data-i18n="pr-s3e-text">Im Falle von Verst&ouml;&szlig;en gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbeh&ouml;rde zu, insbesondere in dem Mitgliedstaat ihres gew&ouml;hnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutma&szlig;lichen Versto&szlig;es.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s3f-title">SSL- bzw. TLS-Verschl&uuml;sselung</strong><br>
+      <span data-i18n="pr-s3f-text">Diese Seite nutzt aus Sicherheitsgr&uuml;nden eine SSL- bzw. TLS-Verschl&uuml;sselung. Eine verschl&uuml;sselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von &bdquo;http://&ldquo; auf &bdquo;https://&ldquo; wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</span></p>
+
+      <p style="margin-top:28px;font-size:16px;"><strong data-i18n="pr-s4-title">4. Datenerfassung auf dieser Website</strong></p>
+      <p><strong data-i18n="pr-s4a-title">Cookies</strong><br>
+      <span data-i18n="pr-s4a-text">Unsere Internetseiten verwenden teilweise sogenannte Cookies. Cookies richten auf Ihrem Endger&auml;t keinen Schaden an und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen. Sie k&ouml;nnen Ihren Browser so einstellen, dass Sie &uuml;ber das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s4b-title">Server-Log-Dateien</strong><br>
+      <span data-i18n="pr-s4b-text">Der Provider dieser Website erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch an uns &uuml;bermittelt. Dies sind: Browsertyp und -version, verwendetes Betriebssystem, Referrer URL, Hostname des zugreifenden Rechners, Uhrzeit der Serveranfrage und IP-Adresse. Eine Zusammenf&uuml;hrung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s4c-title">Kontaktformular</strong><br>
+      <span data-i18n="pr-s4c-text">Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und f&uuml;r den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</span></p>
+
+      <p style="margin-top:16px;"><strong data-i18n="pr-s4d-title">Anfrage per E-Mail, Telefon oder Telefax</strong><br>
+      <span data-i18n="pr-s4d-text">Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zwecks Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</span></p>
+
+      <p style="margin-top:28px;font-size:13px;color:var(--gray);" data-i18n="pr-date">Stand: Juni 2026</p>
+    </div>
+  </div>
+</div></main>
+<footer>
+  <!-- Main layout grid links removed as requested — bottom bar kept exact -->
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <a href="imprint.html" data-i18n="f-imprint">Imprint</a>
+      <a href="privacy.html" data-i18n="f-privacy">Data Privacy</a>
+    </div>
+    <div class="footer-copy" data-i18n="fcopy">&copy; 2026 DANERS&rsquo; Beef &amp; Bread GmbH</div>
+  </div>
+</footer>
+
+<script>
+
+const menuBtn=document.getElementById('menuBtn');
+const overlayMenu=document.getElementById('overlayMenu');
+menuBtn.addEventListener('click',()=>{
+  const o=overlayMenu.classList.toggle('open');
+  menuBtn.classList.toggle('open',o);
+  document.body.style.overflow=o?'hidden':'';
+});
+overlayMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  overlayMenu.classList.remove('open');
+  menuBtn.classList.remove('open');
+  document.body.style.overflow='';
+}));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&overlayMenu.classList.contains('open')){
+    overlayMenu.classList.remove('open');
+    menuBtn.classList.remove('open');
+    document.body.style.overflow='';
+  }
+});
+const navLocItem=document.getElementById('navLocItem');
+if(navLocItem)navLocItem.querySelector('.nav-item-label').addEventListener('click',()=>navLocItem.classList.toggle('open'));
+
+
+const translations={"de": {"nav-menu": "Menü", "nav-locations": "Locations", "nav-jobs": "Jobs",
+ "nav-contact": "Kontakt", "nav-isemarkt": "Isemarkt", "nav-susi": "Sternschanze","nav-about":"Über uns", "fq": "Quick Links", "fl": "Locations", "fk": "Kontakt", "fhome": "Home", "fmenu": "Menü", "fjobs": "Jobs", "fcontact": "Kontakt", "fcopy": "© 2026 DANERS’ Beef & Bread GmbH", "f-imprint": "Impressum", "f-privacy": "Datenschutz", "privacy-label": "Rechtliches", "privacy-title": "Datenschutzerklärung", "pr-s1-title": "1. Datenschutz auf einen Blick", "pr-s1a-title": "Allgemeine Hinweise", "pr-s1a-text": "Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.", 
+ "pr-s1b-title": "Wer ist verantwortlich für die Datenerfassung auf dieser Website?", "pr-s1b-text": "Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten finden Sie im Abschnitt „Hinweis zur verantwortlichen Stelle“ dieser Datenschutzerklärung.", "pr-s1c-title": "Wie erfassen wir Ihre Daten?", "pr-s1c-text": "Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen, z. B. durch Eingabe in unser Kontaktformular. Andere Daten werden automatisch beim Besuch der Website durch unsere IT-Systeme erfasst (z. B. Browser, Betriebssystem, Uhrzeit des Seitenaufrufs).", "pr-s1d-title": "Welche Rechte haben Sie bezüglich Ihrer Daten?", "pr-s1d-text": "Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung, Sperrung oder Löschung dieser Daten zu verlangen. Hierzu sowie zu weiteren Fragen können Sie sich jederzeit an uns wenden.", "pr-s2-title": "2. Hosting", 
+ "pr-s2-text": "Wir hosten die Inhalte unserer Website bei einem externen Dienstleister (Hoster). Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten handeln, die über eine Website generiert werden.", "pr-s3-title": "3. Allgemeine Hinweise und Pflichtinformationen", "pr-s3a-title": "Datenschutz", "pr-s3a-text": "Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.", "pr-s3b-title": "Hinweis zur verantwortlichen Stelle", "pr-s3b-text": "Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:", "pr-phone-label": "Telefon:", "pr-s3c-title": "Speicherdauer", "pr-s3c-text": "Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder Ihre Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben.", 
+ "pr-s3d-title": "Widerruf Ihrer Einwilligung zur Datenverarbeitung", "pr-s3d-text": "Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.", "pr-s3e-title": "Beschwerderecht bei der zuständigen Aufsichtsbehörde", "pr-s3e-text": "Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde zu, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes.", "pr-s3f-title": "SSL- bzw. TLS-Verschlüsselung", "pr-s3f-text": "Diese Seite nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://“ auf „https://“ wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.", "pr-s4-title": "4. Datenerfassung auf dieser Website", "pr-s4a-title": "Cookies", "pr-s4a-text": "Unsere Internetseiten verwenden teilweise sogenannte Cookies. Cookies richten auf Ihrem Endgerät keinen Schaden an und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen. Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben.", 
+ "pr-s4b-title": "Server-Log-Dateien", "pr-s4b-text": "Der Provider dieser Website erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind: Browsertyp und -version, verwendetes Betriebssystem, Referrer URL, Hostname des zugreifenden Rechners, Uhrzeit der Serveranfrage und IP-Adresse. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.", "pr-s4c-title": "Kontaktformular", "pr-s4c-text": "Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.", "pr-s4d-title": "Anfrage per E-Mail, Telefon oder Telefax", "pr-s4d-text": "Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zwecks Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.", "pr-date": "Stand: Juni 2026"}, "en": {"nav-menu": "Menu","nav-about": "About Us", "nav-locations": "Locations", "nav-jobs": "Jobs", "nav-contact": "Contact", "nav-isemarkt": "Isemarkt", "nav-susi": "Sternschanze", "fq": "Quick Links", "fl": "Locations", "fk": "Contact", "fhome": "Home", "fmenu": "Menu", "fjobs": "Jobs", "fcontact": "Contact", "fcopy": "© 2026 DANERS’ Beef & Bread GmbH", "f-imprint": "Imprint", "f-privacy": "Data Privacy", "privacy-label": "Legal", "privacy-title": "Privacy Policy", "pr-s1-title": "1. An overview of data protection", "pr-s1a-title": "General information", "pr-s1a-text": "The following information will provide you with an easy to navigate overview of what will happen with your personal data when you visit this website. Personal data comprises all data that can be used to personally identify you.", "pr-s1b-title": "Who is the responsible party for the recording of data on this website?", "pr-s1b-text": "The data on this website is processed by the operator of the website, whose contact information is available in the section “Information about the responsible party” in this Privacy Policy.", "pr-s1c-title": "How do we record your data?", "pr-s1c-text": "We collect your data as a result of your sharing of your data with us, for instance information you enter into our contact form. Other data is recorded automatically by our IT systems when you visit the website (e.g. browser, operating system, time of access).", "pr-s1d-title": "What rights do you have as far as your information is concerned?", "pr-s1d-text": "You have the right to receive information about the source, recipients and purposes of your archived personal data at any time, free of charge. You also have the right to demand that your data be rectified or eradicated. Please do not hesitate to contact us if you have any questions on this subject.", "pr-s2-title": "2. Hosting", "pr-s2-text": "We host the content of our website with an external service provider (hosting provider). The personal data collected on this website is stored on the servers of the hosting provider. This may include, among other things, IP addresses, contact requests, meta and communication data, contract data, contact details, names, website access, and other data generated via a website.", "pr-s3-title": "3. General information and mandatory information", "pr-s3a-title": "Data protection", "pr-s3a-text": "The operators of this website take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with statutory data protection regulations and this privacy policy.", "pr-s3b-title": "Information about the responsible party", "pr-s3b-text": "The data processing controller on this website is:", "pr-phone-label": "Phone:", "pr-s3c-title": "Storage duration", "pr-s3c-text": "Unless a more specific storage period has been specified in this privacy policy, your personal data will remain with us until the purpose for which it was collected no longer applies. If you assert a justified request for deletion or revoke your consent to data processing, your data will be deleted unless we have other legally permissible reasons for storing it.", "pr-s3d-title": "Revocation of your consent to the processing of data", "pr-s3d-text": "A wide range of data processing transactions are possible only subject to your express consent. You may revoke your consent at any time. This shall be without prejudice to the lawfulness of any data collection that occurred prior to your revocation.", "pr-s3e-title": "Right to log a complaint with the competent supervisory agency", "pr-s3e-text": "In the event of violations of the GDPR, data subjects are entitled to log a complaint with a supervisory agency, particularly in the member state of their habitual residence, place of work, or place of the alleged violation.", "pr-s3f-title": "SSL and/or TLS encryption", "pr-s3f-text": "For security reasons, this site uses SSL or TLS encryption. You can recognize an encrypted connection by checking whether the address line of the browser switches from “http://” to “https://” and by the lock icon in the browser line.", "pr-s4-title": "4. Recording of data on this website", "pr-s4a-title": "Cookies", "pr-s4a-text": "Our website partially uses what are known as cookies. Cookies do not cause any damage to your device and do not contain viruses. Cookies serve to make our offering more user-friendly, effective and secure. You can configure your browser to notify you about the use of cookies and allow them only on a case-by-case basis.", "pr-s4b-title": "Server log files", "pr-s4b-text": "The provider of this website automatically collects and stores information in server log files, which your browser communicates to us automatically. This includes: browser type and version, operating system used, referrer URL, hostname of the accessing computer, time of the server request, and IP address. This data is not merged with other data sources.", "pr-s4c-title": "Contact form", "pr-s4c-text": "If you submit inquiries to us via our contact form, the information provided will be stored by us in order to handle your inquiry and in the event of follow-up questions. We will not share this information without your consent.", "pr-s4d-title": "Request by e-mail, telephone or fax", "pr-s4d-text": "If you contact us by e-mail, telephone or fax, your request, including all resulting personal data, will be stored and processed by us for the purpose of handling your request. We do not pass this data on without your consent.", "pr-date": "Last updated: June 2026"}};
+let currentLang=localStorage.getItem('daners_lang')||'de';
+function applyLang(lang){
+  currentLang=lang;
+  localStorage.setItem('daners_lang',lang);
+  const t=translations[lang]||{};
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!=null)el.textContent=t[k];});
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  document.documentElement.lang=lang;
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+applyLang(currentLang);
+
+</script>
+</body>
+</html>
