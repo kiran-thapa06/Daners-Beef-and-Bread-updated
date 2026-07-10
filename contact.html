@@ -12,14 +12,38 @@
 html{scroll-behavior:smooth;}
 body{font-family:'Poppins',sans-serif;font-weight:300;background:#fff;color:var(--black);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:15px 40px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:none;}
-.hamburger{display:flex;flex-direction:column;justify-content:center;gap:6px;cursor:pointer;background:none;border:none;padding:4px;width:32px;height:32px;flex-shrink:0;}
+/* ── NAV (matches index.html / menu.html / jobs.html / about.html / isemarkt.html / susi.html) ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2001;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s;
+}
+nav.open {
+  background: #ffffff;
+  backdrop-filter: none;
+}
+.nav-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:6px;cursor:pointer;background:none;border:none;padding:4px;width:32px;height:32px;flex-shrink:0;position:relative;z-index:2005;}
 .hamburger span{display:block;width:24px;height:1.5px;background:var(--black);transition:transform .3s,opacity .3s;transform-origin:center;}
 .hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
 .hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
-.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-right{display:flex;align-items:center;gap:20px;position:relative;z-index:2005;}
 .lang-switcher{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,.05);border-radius:20px;padding:3px 4px;}
 .lang-btn{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 10px;border:none;cursor:pointer;border-radius:16px;background:transparent;color:var(--gray);transition:all .2s;}
 .lang-btn.active{background:var(--black);color:#fff;}
@@ -28,23 +52,109 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-social a{color:var(--black);text-decoration:none;display:flex;align-items:center;transition:opacity .2s;}
 .nav-social a:hover{opacity:.4;}
 
-/* OVERLAY */
-.overlay-menu{display:none;position:fixed;inset:0;z-index:199;background:#fff;flex-direction:column;align-items:center;justify-content:center;gap:0;}
-.overlay-menu.open{display:flex;}
-.overlay-menu>a{font-size:clamp(22px,4.5vw,36px);font-weight:700;text-decoration:none;color:var(--black);text-transform:uppercase;letter-spacing:-.5px;padding:10px 0;position:relative;}
-.overlay-menu>a::after{content:'';position:absolute;bottom:6px;left:50%;right:50%;height:2px;background:var(--black);transition:left .25s,right .25s;}
-.overlay-menu>a:hover::after{left:0;right:0;}
-.nav-item{cursor:pointer;text-align:center;}
-.nav-item-label{font-size:clamp(22px,4.5vw,36px);font-weight:700;text-transform:uppercase;letter-spacing:-.5px;padding:10px 0;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--black);user-select:none;}
-.nav-item-label svg{transition:transform .25s;flex-shrink:0;}
-.nav-item.open .nav-item-label svg{transform:rotate(180deg);}
-.nav-dropdown{display:none;flex-direction:column;align-items:center;gap:4px;padding:4px 0 8px;}
-.nav-item.open .nav-dropdown{display:flex;}
-.nav-dropdown a{font-size:clamp(14px,3vw,20px);font-weight:400;text-decoration:none;color:var(--gray);padding:6px 28px;border-radius:4px;transition:color .2s,background .2s;}
-.nav-dropdown a:hover{color:var(--black);background:rgba(0,0,0,.05);}
+/* ── OVERLAY MENU (left-side drawer on desktop; shifts page content right, matches other pages) ── */
+.overlay-menu {
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  z-index: 2000;
+  background: #ffffff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 110px 24px 60px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.overlay-menu.open { transform: translateX(0); }
+
+.overlay-inner-content {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 4vh, 32px);
+}
+
+.overlay-menu a, .nav-item-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: -.5px;
+  padding: 2px 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+}
+.overlay-menu > div.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.overlay-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  height: 2.5px;
+  background: var(--black);
+  transition: left .25s, right .25s;
+}
+.overlay-menu a:hover::after { left: 0; right: 0; }
+.overlay-menu a.active-page::after { left: 0; right: 0; }
+.nav-dropdown a::after { display: none; }
+
+.nav-item { cursor: pointer; text-align: center; width: 100%; }
+.nav-item-label svg { transition: transform .25s; flex-shrink: 0; width: 16px; height: 16px; }
+.nav-item.open .nav-item-label svg { transform: rotate(180deg); }
+
+.nav-dropdown {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 4px;
+}
+.nav-item.open .nav-dropdown { display: flex; }
+.nav-dropdown a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--gray);
+  padding: 6px 28px;
+  border-radius: 4px;
+  transition: color .2s, background .2s;
+}
+.nav-dropdown a:hover { color: var(--black); background: rgba(0,0,0,.05); }
 
 /* LAYOUT */
-main{flex:1;padding-top:60px;}
+main{
+  flex:1;
+  padding-top:60px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+body.menu-open main {
+  margin-left: 50%;
+  width: 50%;
+}
 .page-wrap{display:flex;flex-direction:column;align-items:center;padding:0 48px 64px;}
 
 /* STICKY PAGE TITLE */
@@ -110,10 +220,19 @@ main{flex:1;padding-top:60px;}
 .form-submit:hover{background:#333;}
 .form-success{display:none;padding:14px 18px;background:#f0faf0;border-left:3px solid #4caf50;font-size:13px;color:#1b5e20;margin-top:14px;line-height:1.6;}
 
+.site-footer {
+  transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+body.menu-open .site-footer {
+  margin-left: 50%;
+  width: 50%;
+}
+
 @media(max-width:900px){
-  nav{padding:13px 20px;}
+  nav{padding:18px 20px;}
   .page-wrap{padding:0 24px 52px;}
   .sticky-title-bar{padding:30px 24px 16px;}
+  .overlay-menu { padding-top: 100px; }
 }
 @media(max-width:768px){
   .form-grid{grid-template-columns:1fr;}
@@ -121,11 +240,26 @@ main{flex:1;padding-top:60px;}
   .tab-btn{padding:11px 12px;font-size:10px;}
 }
 @media(max-width:600px){
-  nav{padding:12px 16px;}
+  nav{padding:16px 16px;}
   .page-wrap{padding:0 16px 44px;}
   .section-title{letter-spacing:0.02em;}
   .form-submit{width:100%;text-align:center;}
   .sticky-title-bar{padding:24px 16px 12px;top:57px;}
+
+  body.menu-open main {
+    margin-left: 0;
+    width: 100%;
+  }
+  body.menu-open .site-footer {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .overlay-menu {
+    width: 100%;
+    padding: 90px 16px 40px;
+    border-right: none;
+  }
 }
 @media(max-width:600px){
   .site-footer{flex-direction:column;align-items:center;text-align:center;padding:20px 16px;}
@@ -134,35 +268,41 @@ main{flex:1;padding-top:60px;}
 </style>
 </head>
 <body>
-<nav>
-  <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-  <div class="nav-right">
-    <div class="lang-switcher">
-      <button class="lang-btn" data-lang="de">DE</button>
-      <button class="lang-btn" data-lang="en">EN</button>
-    </div>
-    <div class="nav-social">
-      <a href="https://www.instagram.com/danersbeefbread?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-  <a href="https://www.tiktok.com/@daners_beefbread?_r=1&_t=ZS-96MZFXNPeF8" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
-        
-      <a href="https://open.spotify.com/user/31u5ibsrqur55jybbsljsm7suoyu?si=VGXnb-StS5Gnb2uL0RIUCg" target="_blank" rel="noopener" aria-label="Spotify"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 1 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257C14.1 12.266 10.539 11.88 7.24 12.854a.78.78 0 0 1-.453-1.49c3.757-1.142 7.708-.588 10.765 1.266a.78.78 0 0 1 .257 1.072zm.105-2.835C14.69 9.15(9.948) 8.994 7.188 9.843a.936.936 0 1 1-.543-1.79c3.181-.967 8.47-.78 11.81 1.17a.936.936 0 0 1-.541 1.644z"/></svg></a>
+<nav id="mainNavbar">
+  <div class="nav-top-row">
+    <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="de">DE</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/danersbeefbread?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@daners_beefbread?_r=1&_t=ZS-96MZFXNPeF8" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://open.spotify.com/user/31u5ibsrqur55jybbsljsm7suoyu?si=VGXnb-StS5Gnb2uL0RIUCg" target="_blank" rel="noopener" aria-label="Spotify"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 1 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257C14.1 12.266 10.539 11.88 7.24 12.854a.78.78 0 0 1-.453-1.49c3.757-1.142 7.708-.588 10.765 1.266a.78.78 0 0 1 .257 1.072zm.105-2.835C14.69 9.15 9.948 8.994 7.188 9.843a.936.936 0 1 1-.543-1.79c3.181-.967 8.47-.78 11.81 1.17a.936.936 0 0 1-.541 1.644z"/></svg></a>
+      </div>
     </div>
   </div>
 </nav>
 
 <div class="overlay-menu" id="overlayMenu">
-  <a href="index.html" data-i18n="fhome">Home</a>
-  <a href="menu.html" data-i18n="nav-menu">Menü</a>
-  <div class="nav-item" id="navLocItem">
-    <div class="nav-item-label"><span data-i18n="nav-locations">Locations</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="nav-dropdown">
-      <a href="isemarkt.html" data-i18n="nav-isemarkt">Isemarkt</a>
-      <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
+  <div class="overlay-inner-content">
+    <a href="index.html" data-i18n="fhome">Home</a>
+    <a href="menu.html" data-i18n="nav-menu">Menü</a>
+    <div class="nav-item" id="navLocItem">
+      <div class="nav-item-label">
+        <span data-i18n="nav-locations">Locations</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="nav-dropdown">
+        <a href="isemarkt.html" data-i18n="nav-isemarkt">Isemarkt</a>
+        <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
+      </div>
     </div>
+    <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
+    <a href="contact.html" data-i18n="nav-contact" class="active-page">Kontakt</a>
+    <a href="about.html" data-i18n="nav-about">About Us</a>
   </div>
-  <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
-  <a href="contact.html" data-i18n="nav-contact">Kontakt</a>
-  <a href="about.html" data-i18n="nav-about">About Us</a>
 </div>
 
 <main>
@@ -254,29 +394,39 @@ main{flex:1;padding-top:60px;}
     <a href="imprint.html" data-i18n="f-imprint" style="font-size:12px;color:rgba(0,0,0,.55);text-decoration:underline;text-decoration-color:rgba(0,0,0,.25);font-family:'Poppins',sans-serif;transition:color .2s;">Impressum</a>
     <a href="privacy.html" data-i18n="f-privacy" style="font-size:12px;color:rgba(0,0,0,.55);text-decoration:underline;text-decoration-color:rgba(0,0,0,.25);font-family:'Poppins',sans-serif;transition:color .2s;">Datenschutz</a>
   </div>
-  <span data-i18n="fcopy" style="font-size:12px;color:rgba(0,0,0,.45);font-family:'Poppins',sans-serif;">&copy; 2026 DANERS&rsquo; Beef &amp; Bread GmbH</span>
+  <span data-i18n="fcopy" style="font-size:12px;color:rgba(0,0,0,.45);font-family:'Poppins',sans-serif;">&copy; 2026 DANERS &ndash; Beef &amp; Bread GmbH</span>
 </footer>
 
 <script>
 const menuBtn=document.getElementById('menuBtn');
 const overlayMenu=document.getElementById('overlayMenu');
+const mainNavbar=document.getElementById('mainNavbar');
+
+function closeMenu() {
+  overlayMenu.classList.remove('open');
+  menuBtn.classList.remove('open');
+  mainNavbar.classList.remove('open');
+  document.body.classList.remove('menu-open');
+  document.body.style.overflow='';
+}
+
 menuBtn.addEventListener('click',()=>{
   const o=overlayMenu.classList.toggle('open');
   menuBtn.classList.toggle('open',o);
-  document.body.style.overflow=o?'hidden':'';
+  mainNavbar.classList.toggle('open',o);
+  document.body.classList.toggle('menu-open',o);
+  const isMobile = window.matchMedia('(max-width:600px)').matches;
+  document.body.style.overflow = (o && isMobile) ? 'hidden' : '';
 });
-overlayMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-  overlayMenu.classList.remove('open');
-  menuBtn.classList.remove('open');
-  document.body.style.overflow='';
-}));
+
+overlayMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeMenu));
+
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&overlayMenu.classList.contains('open')){
-    overlayMenu.classList.remove('open');
-    menuBtn.classList.remove('open');
-    document.body.style.overflow='';
+    closeMenu();
   }
 });
+
 const navLocItem=document.getElementById('navLocItem');
 if(navLocItem){
   navLocItem.querySelector('.nav-item-label').addEventListener('click',()=>navLocItem.classList.toggle('open'));
@@ -322,7 +472,7 @@ function sendForm(prefix,subject,fieldIds){
 const translations={
   "de":{
     "nav-menu":"Menü","nav-locations":"Locations","nav-jobs":"Jobs","nav-contact":"Kontakt","nav-isemarkt":"Isemarkt","nav-susi":"Sternschanze","nav-about":"Über uns",
-    "fhome":"Home","fmenu":"Menü","fjobs":"Jobs","fcontact":"Kontakt","fcopy":"© 2026 DANERS' Beef & Bread GmbH","f-imprint":"Impressum","f-privacy":"Datenschutz",
+    "fhome":"Home","fmenu":"Menü","fjobs":"Jobs","fcontact":"Kontakt","fcopy":"© 2026 DANERS – Beef & Bread GmbH","f-imprint":"Impressum","f-privacy":"Datenschutz",
     "contact-label":"GET IN TOUCH","contact-title":"KONTAKT",
     "tab-events":"Private Feier / Events","tab-enquiry":"Project Enquiry","tab-jobs":"Jobs","tab-press":"Press & Media",
     "f-name":"Name","f-email":"E-Mail","f-phone":"Telefon","f-date":"Datum des Events","f-guests":"Anzahl der Gäste","f-evtype":"Art der Veranstaltung","f-msg":"Nachricht",
@@ -340,7 +490,7 @@ const translations={
   },
   "en":{
     "nav-menu":"Menu","nav-locations":"Locations","nav-jobs":"Jobs","nav-contact":"Contact","nav-isemarkt":"Isemarkt","nav-susi":"Sternschanze","nav-about":"About Us",
-    "fhome":"Home","fmenu":"Menu","fjobs":"Jobs","fcontact":"Contact","fcopy":"© 2026 DANERS' Beef & Bread GmbH","f-imprint":"Imprint","f-privacy":"Data Privacy",
+    "fhome":"Home","fmenu":"Menu","fjobs":"Jobs","fcontact":"Contact","fcopy":"© 2026 DANERS – Beef & Bread GmbH","f-imprint":"Imprint","f-privacy":"Data Privacy",
     "contact-label":"GET IN TOUCH","contact-title":"CONTACT",
     "tab-events":"Private Party / Events","tab-enquiry":"Project Enquiry","tab-jobs":"Jobs","tab-press":"Press & Media",
     "f-name":"Name","f-email":"Email","f-phone":"Phone","f-date":"Event Date","f-guests":"Number of Guests","f-evtype":"Type of Event","f-msg":"Message",
