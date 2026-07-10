@@ -12,14 +12,38 @@
 html{scroll-behavior:smooth;}
 body{font-family:'Poppins',sans-serif;font-weight:300;background:#fff;color:var(--black);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:15px 40px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:none;}
-.hamburger{display:flex;flex-direction:column;justify-content:center;gap:6px;cursor:pointer;background:none;border:none;padding:4px;width:32px;height:32px;flex-shrink:0;}
+/* ── NAV (matches index.html / menu.html / jobs.html) ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2001;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s;
+}
+nav.open {
+  background: #ffffff;
+  backdrop-filter: none;
+}
+.nav-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:6px;cursor:pointer;background:none;border:none;padding:4px;width:32px;height:32px;flex-shrink:0;position:relative;z-index:2005;}
 .hamburger span{display:block;width:24px;height:1.5px;background:var(--black);transition:transform .3s,opacity .3s;transform-origin:center;}
 .hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
 .hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
-.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-right{display:flex;align-items:center;gap:20px;position:relative;z-index:2005;}
 .lang-switcher{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,.05);border-radius:20px;padding:3px 4px;}
 .lang-btn{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 10px;border:none;cursor:pointer;border-radius:16px;background:transparent;color:var(--gray);transition:all .2s;}
 .lang-btn.active{background:var(--black);color:#fff;}
@@ -28,51 +52,130 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-social a{color:var(--black);text-decoration:none;display:flex;align-items:center;transition:opacity .2s;}
 .nav-social a:hover{opacity:.4;}
 
-/* ── OVERLAY MENU ── */
-.overlay-menu{display:none;position:fixed;inset:0;z-index:199;background:#fff;flex-direction:column;align-items:center;justify-content:center;gap:0;}
-.overlay-menu.open{display:flex;}
-.overlay-menu>a{font-size:clamp(22px,4.5vw,36px);font-weight:700;text-decoration:none;color:var(--black);text-transform:uppercase;letter-spacing:-.5px;padding:10px 0;position:relative;}
-.overlay-menu>a::after{content:'';position:absolute;bottom:6px;left:50%;right:50%;height:2px;background:var(--black);transition:left .25s,right .25s;}
-.overlay-menu>a:hover::after{left:0;right:0;}
-.overlay-menu>a.active-page{border-bottom:2px solid var(--black);}
-.nav-item{cursor:pointer;text-align:center;}
-.nav-item-label{font-size:clamp(22px,4.5vw,36px);font-weight:700;text-transform:uppercase;letter-spacing:-.5px;padding:10px 0;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--black);user-select:none;}
-.nav-item-label svg{transition:transform .25s;flex-shrink:0;}
-.nav-item.open .nav-item-label svg{transform:rotate(180deg);}
-.nav-dropdown{display:none;flex-direction:column;align-items:center;gap:4px;padding:4px 0 8px;}
-.nav-item.open .nav-dropdown{display:flex;}
-.nav-dropdown a{font-size:clamp(14px,3vw,20px);font-weight:400;text-decoration:none;color:var(--gray);padding:6px 28px;border-radius:4px;transition:color .2s,background .2s;}
-.nav-dropdown a:hover{color:var(--black);background:rgba(0,0,0,.05);}
-
-/* ── FIXED & CENTERED ABOUT US HEADER ── */
-.about-sticky-header{
+/* ── OVERLAY MENU (left-side drawer on desktop; shifts page content right, matches index/menu/jobs) ── */
+.overlay-menu {
+  display: flex;
   position: fixed;
-  top: 60px;
+  top: 0;
+  bottom: 0;
   left: 0;
-  right: 0;
-  z-index: 100;
-  background: #fff;
-  padding: 20px 24px;
-  text-align: center;
+  width: 50%;
+  z-index: 2000;
+  background: #ffffff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 110px 24px 60px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.about-sticky-header h1{
-  font-size:clamp(32px, 6vw, 64px);
-  font-weight:900;
-  letter-spacing:-1px;
-  line-height:1.1;
-  color:var(--black);
-  text-transform:uppercase;
+.overlay-menu.open { transform: translateX(0); }
+
+.overlay-inner-content {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 4vh, 32px);
+}
+
+.overlay-menu a, .nav-item-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: -.5px;
+  padding: 2px 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+}
+.overlay-menu > div.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.overlay-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  height: 2.5px;
+  background: var(--black);
+  transition: left .25s, right .25s;
+}
+.overlay-menu a:hover::after { left: 0; right: 0; }
+.overlay-menu a.active-page::after { left: 0; right: 0; }
+.nav-dropdown a::after { display: none; }
+
+.nav-item { cursor: pointer; text-align: center; width: 100%; }
+.nav-item-label svg { transition: transform .25s; flex-shrink: 0; width: 16px; height: 16px; }
+.nav-item.open .nav-item-label svg { transform: rotate(180deg); }
+
+.nav-dropdown {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 4px;
+}
+.nav-item.open .nav-dropdown { display: flex; }
+.nav-dropdown a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--gray);
+  padding: 6px 28px;
+  border-radius: 4px;
+  transition: color .2s, background .2s;
+}
+.nav-dropdown a:hover { color: var(--black); background: rgba(0,0,0,.05); }
+
+/* ── ABOUT US TITLE (now page content, sits below nav like other pages) ── */
+.about-title-header {
+  text-align: center;
+  width: 100%;
+  background: #fff;
+  padding: 40px 24px 20px;
+}
+.about-title-header h1 {
+  font-size: clamp(24px, 4.5vw, 42px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--black);
+  text-transform: uppercase;
 }
 
 /* ── MAIN CONTENT ── */
 main{
   flex:1;
-  margin-top: 160px;
+  padding-top: 90px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.page-wrap{max-width:760px;margin:0 auto;padding:24px 24px 60px;}
+body.menu-open main {
+  margin-left: 50%;
+  width: 50%;
+}
+.page-wrap{max-width:760px;margin:0 auto;padding:32px 24px 60px;width:100%;}
 
 /* ── CHAT SECTION ── */
-.chat-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;text-align: center;}
+.chat-label{font-size:11px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:8px;text-align:center;}
 .chat-intro{font-size:.95rem;font-weight:300;color:#555;margin-bottom:32px;line-height:1.7;text-align: left;}
 
 .chat-widget{border:1px solid #000; background:#fff;}
@@ -200,12 +303,18 @@ main{
 /* ── FOOTER BAR ── */
 .footer-legal-bar {
   display: flex;
-  justify-content: space-between; /* Imprint/Privacy on left, copyright on right (desktop) */
+  justify-content: space-between;
   align-items: center;
   gap: 40px;
   padding: 24px 40px;
   border-top: 1px solid var(--border);
   background: #fff;
+  margin-top: auto;
+  transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+body.menu-open .footer-legal-bar {
+  margin-left: 50%;
+  width: 50%;
 }
 .footer-left-links {
   display: flex;
@@ -230,18 +339,42 @@ main{
 }
 
 @media(max-width:900px){
-  nav{padding:13px 20px;}
-  .about-sticky-header{top:55px; padding:16px 20px;}
-  main{margin-top: 140px;}
+  nav{padding:18px 20px;}
+  main{padding-top: 85px;}
+  .about-title-header { padding: 30px 24px 16px; }
+  .overlay-menu { padding-top: 100px; }
+  .footer-legal-bar { padding: 24px 24px; }
 }
 @media(max-width:600px){
-  nav{padding:12px 16px;}
-  main{margin-top: 130px;}
+  nav{padding:16px 16px;}
+  main{padding-top: 70px;}
+  .about-title-header { padding: 24px 16px 12px; }
+
+  body.menu-open main {
+    margin-left: 0;
+    width: 100%;
+  }
+  body.menu-open .footer-legal-bar {
+    margin-left: 0;
+    width: 100%;
+  }
+  body.menu-open .about-title-header {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+
+  .overlay-menu {
+    width: 100%;
+    padding: 90px 16px 40px;
+    border-right: none;
+  }
+
   .ask-btn{padding:0 18px;letter-spacing:1px;}
   .footer-legal-bar {
     flex-direction: column;
     gap: 12px;
-    align-items: center;   /* Center everything on mobile */
+    align-items: center;
     justify-content: center;
     padding: 20px 24px;
     text-align: center;
@@ -258,63 +391,65 @@ main{
 <body>
 
 <!-- ── NAV ── -->
-<nav>
-  <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-  <div class="nav-right">
-    <div class="lang-switcher">
-      <button class="lang-btn" data-lang="de">DE</button>
-      <button class="lang-btn" data-lang="en">EN</button>
-    </div>
-    <div class="nav-social">
-      <a href="https://www.instagram.com/danersbeefbread?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <!-- FIXED TIKTOK LOGO VECTOR -->
-      <a href="https://www.tiktok.com/@daners_beefbread?_r=1&_t=ZS-96MZFXNPeF8" target="_blank" rel="noopener" aria-label="TikTok">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.03 1.6 4.17 1.22 1.42 2.97 2.27 4.78 2.45v3.91c-1.68-.02-3.32-.51-4.74-1.41-.3-.19-.58-.4-.85-.64V14.5c.03 2.51-1.12 4.93-3.1 6.47-2.32 1.83-5.59 2.19-8.29.93-2.73-1.25-4.52-4.13-4.49-7.14.01-3.23 2.14-6.14 5.25-7.05 1.57-.47 3.26-.29 4.7.49v4.06c-.84-.52-1.84-.71-2.81-.52-1.54.32-2.78 1.63-3.03 3.18-.37 2.12 1.11 4.15 3.25 4.45 2.11.33 4.14-1.1 4.47-3.21.05-.33.06-.67.06-1V0h.35z"/>
-        </svg>
-      </a>
-       <a href="https://open.spotify.com/user/31u5ibsrqur55jybbsljsm7suoyu?si=VGXnb-StS5Gnb2uL0RIUCg" target="_blank" rel="noopener" aria-label="Spotify"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 1 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257C14.1 12.266 10.539 11.88 7.24 12.854a.78.78 0 0 1-.453-1.49c3.757-1.142 7.708-.588 10.765 1.266a.78.78 0 0 1 .257 1.072zm.105-2.835C14.69 9.15 9.948 8.994 7.188 9.843a.936.936 0 1 1-.543-1.79c3.181-.967 8.47-.78 11.81 1.17a.936.936 0 0 1-.541 1.644z"/></svg></a>
+<nav id="mainNavbar">
+  <div class="nav-top-row">
+    <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="de">DE</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/danersbeefbread?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@daners_beefbread?_r=1&_t=ZS-96MZFXNPeF8" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.03 1.6 4.17 1.22 1.42 2.97 2.27 4.78 2.45v3.91c-1.68-.02-3.32-.51-4.74-1.41-.3-.19-.58-.4-.85-.64V14.5c.03 2.51-1.12 4.93-3.1 6.47-2.32 1.83-5.59 2.19-8.29.93-2.73-1.25-4.52-4.13-4.49-7.14.01-3.23 2.14-6.14 5.25-7.05 1.57-.47 3.26-.29 4.7.49v4.06c-.84-.52-1.84-.71-2.81-.52-1.54.32-2.78 1.63-3.03 3.18-.37 2.12 1.11 4.15 3.25 4.45 2.11.33 4.14-1.1 4.47-3.21.05-.33.06-.67.06-1V0h.35z"/>
+          </svg>
+        </a>
+        <a href="https://open.spotify.com/user/31u5ibsrqur55jybbsljsm7suoyu?si=VGXnb-StS5Gnb2uL0RIUCg" target="_blank" rel="noopener" aria-label="Spotify"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 1 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257C14.1 12.266 10.539 11.88 7.24 12.854a.78.78 0 0 1-.453-1.49c3.757-1.142 7.708-.588 10.765 1.266a.78.78 0 0 1 .257 1.072zm.105-2.835C14.69 9.15 9.948 8.994 7.188 9.843a.936.936 0 1 1-.543-1.79c3.181-.967 8.47-.78 11.81 1.17a.936.936 0 0 1-.541 1.644z"/></svg></a>
+      </div>
     </div>
   </div>
 </nav>
 
 <!-- ── OVERLAY MENU ── -->
 <div class="overlay-menu" id="overlayMenu">
-  <a href="index.html" data-i18n="fhome">Home</a>
-  <a href="menu.html" data-i18n="nav-menu">Menü</a>
-  <div class="nav-item" id="navLocItem">
-    <div class="nav-item-label">
-      <span data-i18n="nav-locations">Locations</span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  <div class="overlay-inner-content">
+    <a href="index.html" data-i18n="fhome">Home</a>
+    <a href="menu.html" data-i18n="nav-menu">Menü</a>
+    <div class="nav-item" id="navLocItem">
+      <div class="nav-item-label">
+        <span data-i18n="nav-locations">Locations</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="nav-dropdown">
+        <a href="isemarkt.html" data-i18n="nav-isemarkt">Isemarkt</a>
+        <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
+      </div>
     </div>
-    <div class="nav-dropdown">
-      <a href="isemarkt.html" data-i18n="nav-isemarkt">Isemarkt</a>
-      <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
-    </div>
+    <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
+    <a href="contact.html" data-i18n="nav-contact">Kontakt</a>
+    <a href="about.html" data-i18n="nav-about" class="active-page">About Us</a>
   </div>
-  <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
-  <a href="contact.html" data-i18n="nav-contact">Kontakt</a>
-  <a href="about.html" data-i18n="nav-about" class="active-page">About Us</a>
-</div>
-
-<!-- ── FIXED ABOUT US HEADER ── -->
-<div class="about-sticky-header">
-  <h1 data-i18n="about-title">About Us</h1>
 </div>
 
 <!-- ── MAIN ── -->
 <main>
+  <div class="about-title-header">
+    <h1 data-i18n="about-title">About Us</h1>
+    <p class="chat-label" data-i18n="chat-label">FRAG UNS (FAST) ALLES</p>
+  </div>
+
   <div class="page-wrap">
-    <div class="chat-label" data-i18n="chat-label">Ask Us Anything</div>
-    <p class="chat-intro" data-i18n="chat-intro">Have a question about our menu, ingredients, opening hours, or anything else about DANERS? Our assistant has the answers.</p>
+    <p class="chat-intro" data-i18n="chat-intro">Our AI has the answers. If not, contact us directly on Instagram.</p>
 
     <div class="chat-widget">
       <div class="chat-messages" id="chatMessages">
         <div class="msg bot" data-kb-id="welcome">
-          <div class="msg-sender" data-i18n="chat-sender-bot">DANERS&rsquo;</div>
-          <div class="bubble" id="welcomeBubble" data-i18n="chat-welcome">Welcome to DANERS Beef &amp; Bread! Ask me anything about our menu, our story, opening hours, or allergens.</div>
+          <div class="msg-sender" data-i18n="chat-sender-bot">@danersbeefbread</div>
+          <div class="bubble" id="welcomeBubble" data-i18n="chat-welcome">Hey hey, willkommen bei DANERS Beef & Bread! Frag mich alles über unser Menü, unsere Geschichte, Öffnungszeiten oder Allergene.</div>
         </div>
       </div>
 
@@ -332,31 +467,45 @@ main{
   </div>
 </main>
 
-
-
 <!-- ── FOOTER BAR ── -->
 <div class="footer-legal-bar">
   <div class="footer-left-links">
     <a href="imprint.html" data-i18n="f-imprint">Imprint</a>
     <a href="privacy.html" data-i18n="f-privacy">Data Privacy</a>
   </div>
-  <div class="end-copyright" data-i18n="fcopy">&copy; 2026 DANERS&rsquo; Beef &amp; Bread GmbH</div>
+  <div class="end-copyright" data-i18n="fcopy">&copy; 2026 DANERS &ndash; Beef &amp; Bread GmbH</div>
 </div>
 
 <script>
-/* ── NAV HAMBURGER ── */
+/* ── NAV HAMBURGER (matches index.html / menu.html / jobs.html) ── */
 const menuBtn = document.getElementById('menuBtn');
 const overlayMenu = document.getElementById('overlayMenu');
+const mainNavbar = document.getElementById('mainNavbar');
+
+function closeMenu() {
+  overlayMenu.classList.remove('open');
+  menuBtn.classList.remove('open');
+  mainNavbar.classList.remove('open');
+  document.body.classList.remove('menu-open');
+  document.body.style.overflow = '';
+}
+
 menuBtn.addEventListener('click', () => {
   const o = overlayMenu.classList.toggle('open');
   menuBtn.classList.toggle('open', o);
-  document.body.style.overflow = o ? 'hidden' : '';
+  mainNavbar.classList.toggle('open', o);
+  document.body.classList.toggle('menu-open', o);
+  const isMobile = window.matchMedia('(max-width:600px)').matches;
+  document.body.style.overflow = (o && isMobile) ? 'hidden' : '';
 });
-overlayMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  overlayMenu.classList.remove('open');
-  menuBtn.classList.remove('open');
-  document.body.style.overflow = '';
-}));
+
+overlayMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && overlayMenu.classList.contains('open')) {
+    closeMenu();
+  }
+});
 
 const navLocItem = document.getElementById('navLocItem');
 if (navLocItem) {
@@ -368,13 +517,13 @@ const translations = {
   de: {
     "fhome":"Home","nav-menu":"Menü","nav-locations":"Locations","nav-jobs":"Jobs",
     "nav-contact":"Kontakt","nav-isemarkt":"Isemarkt","nav-susi":"Sternschanze","nav-about":"Über uns",
-    "fcopy":"© 2026 DANERS' Beef & Bread GmbH",
+    "fcopy":"© 2026 DANERS – Beef & Bread GmbH",
     "f-imprint":"Impressum","f-privacy":"Datenschutz",
     "about-title":"Über uns",
-    "chat-label":"Frag uns alles","chat-intro":"Hast du eine Frage zu unserem Menü, unseren Zutaten, Öffnungszeiten oder sonst etwas über DANERS? Unser Assistent hat die Antworten.",
-    "chat-welcome":"Willkommen bei DANERS Beef & Bread! Frag mich alles über unser Menü, unsere Philosophie, Öffnungszeiten oder Allergene.",
+    "chat-label":"FRAG UNS (FAST) ALLES","chat-intro":"Unsere KI hat die Antworten. Falls nicht, kontaktiere uns direkt auf Instagram.",
+    "chat-welcome":"Hey hey, willkommen bei DANERS Beef & Bread! Frag mich alles über unser Menü, unsere Geschichte, Öffnungszeiten oder Allergene.",
     "chat-ph":"Deine Frage hier eingeben…","ask-btn":"Fragen",
-    "chat-sender-bot":"DANERS'","chat-sender-you":"Du",
+    "chat-sender-bot":"@danersbeefbread","chat-sender-you":"Du",
     "private-reply":"Diese Information ist privat. Bitte wende dich direkt an unseren Manager — er hilft dir gerne weiter.",
     "chips-suggestions":"Vorschläge:",
     "follow-up-text":"Möchtest du auch etwas hierüber wissen?",
@@ -393,13 +542,13 @@ const translations = {
   en: {
     "fhome":"Home","nav-menu":"Menu","nav-locations":"Locations","nav-jobs":"Jobs",
     "nav-contact":"Contact","nav-isemarkt":"Isemarkt","nav-susi":"Sternschanze","nav-about":"About Us",
-    "fcopy":"© 2026 DANERS' Beef & Bread GmbH",
+    "fcopy":"© 2026 DANERS – Beef & Bread GmbH",
     "f-imprint":"Imprint","f-privacy":"Data Privacy",
     "about-title":"About Us",
-    "chat-label":"Ask Us Anything","chat-intro":"Have a question about our menu, ingredients, opening hours, or anything else about DANERS? Our assistant has the answers.",
-    "chat-welcome":"Welcome to DANERS Beef & Bread! Ask me anything about our menu, our story, opening hours, or allergens.",
+    "chat-label":"Ask Us (Almost) Anything","chat-intro":"Our AI has the answers. If not, contact us directly on Instagram.",
+    "chat-welcome":"Hey hey! Welcome to DANERS Beef & Bread! Ask me anything about our menu, our story, opening hours, or allergens.",
     "chat-ph":"Type your question here…","ask-btn":"Ask",
-    "chat-sender-bot":"DANERS'","chat-sender-you":"You",
+    "chat-sender-bot":"@danersbeefbread","chat-sender-you":"You",
     "private-reply":"That information is private. Please kindly reach out to our manager directly — they'll be happy to help you.",
     "chips-suggestions":"Suggestions:",
     "follow-up-text":"Would you also like to know about this?",
@@ -421,7 +570,7 @@ let currentLang = localStorage.getItem('daners_lang') || 'de';
 
 /* ── MULTILINGUAL KNOWLEDGE BASE ── */
 const KB_DE = {
-  'welcome': `Willkommen bei DANERS Beef & Bread! Frag mich alles über unser Menü, unsere Philosophie, Öffnungszeiten oder Allergene.`,
+  'welcome': `Hey hey, willkommen bei DANERS Beef & Bread! Frag mich alles über unser Menü, unsere Geschichte, Öffnungszeiten oder Allergene.`,
   'private': `Diese Information ist privat. Bitte wende dich direkt an unseren Manager — er hilft dir gerne weiter.`,
   'who': `Wir sind DANERS – Beef & Bread. Entstanden in Hamburg und gebaut um eine einfache Idee: verdammt gute Beef Sandwiches. Keine riesige Speisekarte, kein unnötiger Schnickschnack – einfach ein Produkt, das wir lieben und seit Jahren perfektionieren.`,
   'what': `Wir legen Rinderhüfte einen Monat lang ein, schneiden sie hauchdünn auf, grillen sie frisch und packen sie in gutes Brot. Das ist DANERS.`,
@@ -437,7 +586,7 @@ const KB_DE = {
 };
 
 const KB_EN = {
-  'welcome': `Welcome to DANERS Beef & Bread! Ask me anything about our menu, our story, opening hours, or allergens.`,
+  'welcome': `Hey hey! Welcome to DANERS Beef & Bread! Ask me anything about our menu, our story, opening hours, or allergens.`,
   'private': `That information is private. Please kindly reach out to our manager directly — they'll be happy to help you.`,
   'who': `We're DANERS – Beef & Bread. Born in Hamburg and built around one thing: ridiculously good beef sandwiches. No giant menu, no unnecessary extras – just a product we love and have been perfecting for years.`,
   'what': `We cure beef for a month, slice it paper-thin, grill it fresh and serve it in great bread. That's the heart of DANERS.`,
@@ -611,7 +760,7 @@ function typeBotResponse(fullText, targetId) {
   
   const sender = document.createElement('div');
   sender.className = 'msg-sender';
-  sender.textContent = translations[currentLang]['chat-sender-bot'] || "DANERS'";
+  sender.textContent = translations[currentLang]['chat-sender-bot'] || "@danersbeefbread";
   
   const bubble = document.createElement('div');
   bubble.className = 'bubble';
@@ -686,7 +835,7 @@ function rebuildChatDOM() {
         bubble.textContent = item.value;
       }
     } else {
-      sender.textContent = translations[currentLang]['chat-sender-bot'] || "DANERS'";
+      sender.textContent = translations[currentLang]['chat-sender-bot'] || "@danersbeefbread";
       let botAnswer = currentKB[item.kbId] || currentKB['private'];
       if (item.kbId && item.kbId !== 'private') {
          botAnswer += `\n\n${translations[currentLang]['follow-up-text']}`;
