@@ -184,7 +184,15 @@ body.menu-open main {
   margin-left: 50%;
   width: 50%;
 }
-
+.rocket-img {
+  width: 20px !important;    /* Forces the specific size */
+  height: 20px !important;   /* Keeps it square and consistent */
+  display: inline-block !important; /* Forces it to stay in the text flow */
+  vertical-align: middle;    /* Aligns it perfectly with the letters */
+  margin-left: 6px;          /* Adds the space you want */
+  margin-right: 0;
+  float: none;               /* Ensures no floating behavior is interfering */
+}
 /* ── PAGE WRAP: editorial two-column layout — text left, photo right ── */
 .page-wrap {
   display: flex;
@@ -221,14 +229,13 @@ body.menu-open main {
 /* MAIN SECTION TITLE */
 .section-title-bold {
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(24px, 4vw, 32px);
-  font-weight: 800;
-  letter-spacing: -1px;
-  line-height: 1.2;
+  font-size: clamp(24px, 4.5vw, 42px); /* Use the larger size from JOBS */
+  font-weight: 900;                    /* Use the bolder weight from JOBS */
+  letter-spacing: 0.01em;              /* Matches JOBS */
+  line-height: 1.1;                    /* Matches JOBS */
   text-transform: uppercase;
   color: var(--black);
-  margin-bottom: 32px;
-  text-align: left;
+  margin: 0;
 }
 
 /* JOB CONTENT BODY */
@@ -498,7 +505,9 @@ const translations={
     "jobs-label": "Werde Teil des Teams", 
     "jobs-title": "Jobs", 
     "jobs-slogan": "Komm, wie du bist. Lerne und wachse mit uns.",
-    "jobs-body-html": "<p>Menschen machen den Unterschied.</p><p>Deshalb suchen wir bei DANERS engagierte Persönlichkeiten, die Verantwortung übernehmen und gemeinsam mit uns wachsen möchten.</p><p>Für uns zählen nicht nur Qualifikationen, sondern vor allem Motivation, Charakter und Potenzial.</p><p>Wir freuen uns darauf, dich kennenzulernen.</p><p>Starte jetzt deine Karriere bei DANERS</p>",
+    // Inside your translations object:
+
+"jobs-body-html": "<p>Menschen machen den Unterschied.</p><p>Deshalb suchen wir bei DANERS engagierte Persönlichkeiten, die Verantwortung übernehmen und gemeinsam mit uns wachsen möchten.</p><p>Für uns zählen nicht nur Qualifikationen, sondern vor allem Motivation, Charakter und Potenzial.</p><p>Wir freuen uns darauf, dich kennenzulernen.</p><p>Starte jetzt deine Karriere bei DANERS <img src='images/rocket.png' class='rocket-img'></p>",
     "jobs-cta": "Jetzt bewerben"
   }, 
   "en": {
@@ -516,8 +525,9 @@ const translations={
     "jobs-label": "Join the Team", 
     "jobs-title": "Jobs", 
     "jobs-slogan": "Come as you are, learn & grow with us.",
-    "jobs-body-html": "<p>People make the difference.</p><p>That’s why at DANERS, we’re looking for motivated individuals who are ready to take responsibility and grow with us.</p><p>For us, it’s not just about qualifications – we value motivation, character, and potential above all.</p><p>We look forward to getting to know you.</p><p>Start your career at DANERS today.</p>",
-    "jobs-cta": "Apply now"
+    // Repeat for the English version
+"jobs-body-html": "<p>People make the difference.</p><p>That’s why at DANERS, we’re looking for motivated individuals who are ready to take responsibility and grow with us.</p><p>For us, it’s not just about qualifications – we value motivation, character, and potential above all.</p><p>We look forward to getting to know you.</p><p>Start your career at DANERS today. <img src='images/rocket.png' class='rocket-img'></p>",
+"jobs-cta": "Apply now"
   }
 };
 
