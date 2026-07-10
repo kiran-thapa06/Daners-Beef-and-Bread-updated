@@ -3,39 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Home – DANERS’</title>
+  <title>SUSI – DANERS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-/* ── CORE STYLES ── */
-:root {
-  --black: #111;
-  --white: #ffffff;
-  --cream: #f8f7f4;
-  --tan: #d4a574;
-  --sage: #7a9e7e;
-  --gray: #888;
-  --border: #e0e0e0;
-}
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html, body {
-  height: 100%;
-}
-body {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-  background: #ffffff !important;
-  color: var(--black);
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
+:root{--black:#111;--white:#ffffff;--cream:#f8f7f4;--tan:#d4a574;--sage:#7a9e7e;--gray:#888;--border:#e0e0e0;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;font-weight:300;background:#fff;color:var(--black);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
 
-/* ── NAV BAR (Updated) ── */
+/* ── NAV (matches index.html / menu.html / jobs.html / about.html / isemarkt.html) ── */
 nav {
   position: fixed;
   top: 0;
@@ -43,7 +20,7 @@ nav {
   right: 0;
   z-index: 2001;
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 15px 40px;
@@ -51,20 +28,18 @@ nav {
   backdrop-filter: blur(10px);
   transition: background 0.3s;
 }
-
+nav.open {
+  background: #ffffff;
+  backdrop-filter: none;
+}
 .nav-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-nav.open {
-  background: #ffffff;
-  backdrop-filter: none;
-}
 
-
-/* ── CONTROLS & HAMBURGER ── */
+/* HAMBURGER BUTTON */
 .hamburger {
   display: flex;
   flex-direction: column;
@@ -78,7 +53,7 @@ nav.open {
   height: 32px;
   flex-shrink: 0;
   position: relative;
-  z-index: 2002; 
+  z-index: 2005;
 }
 .hamburger span {
   display: block;
@@ -88,71 +63,71 @@ nav.open {
   transition: transform .3s, opacity .3s;
   transform-origin: center;
 }
-.hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
 
 .nav-right {
   display: flex;
   align-items: center;
   gap: 20px;
+  position: relative;
+  z-index: 2005;
 }
-.lang-switcher {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  background: rgba(0,0,0,.05);
-  border-radius: 20px;
-  padding: 3px 4px;
-}
-.lang-btn {
-  font-family: 'Poppins', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  padding: 4px 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 16px;
-  background: transparent;
-  color: var(--gray);
-  transition: all .2s;
-}
-.lang-btn.active {
-  background: var(--black);
-  color: #fff;
-}
-.lang-btn:hover:not(.active) { color: var(--black); }
+.lang-switcher{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,.05);border-radius:20px;padding:3px 4px;}
+.lang-btn{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 10px;border:none;cursor:pointer;border-radius:16px;background:transparent;color:var(--gray);transition:all .2s;}
+.lang-btn.active{background:var(--black);color:#fff;}
+.lang-btn:hover:not(.active){color:var(--black);}
+.nav-social{display:flex;gap:16px;align-items:center;}
+.nav-social a{color:var(--black);text-decoration:none;display:flex;align-items:center;transition:opacity .2s;}
+.nav-social a:hover{opacity:.4;}
 
-.nav-social {
-  display: flex;
-  gap: 16px;
-  align-items: center;
+/* ── SUSI TITLE (now page content, sits below nav like every other page's title) ── */
+.loc-hero-title {
+  text-align: center;
+  width: 100%;
+  background: #ffffff;
+  padding: 40px 24px 20px;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.nav-social a {
+.loc-hero-title h1 {
+  font-size: clamp(24px, 4.5vw, 42px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  margin: 0;
+  text-transform: uppercase;
   color: var(--black);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity .2s;
 }
-.nav-social a:hover { opacity: .4; }
+.loc-hero-title p {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 8px;
+}
 
-/* ── OVERLAY DRAWER MENU ── */
+/* ── OVERLAY MENU (left-side drawer on desktop; shifts page content right, matches other pages) ── */
 .overlay-menu {
   display: flex;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
-  width: 50%; 
+  width: 50%;
   z-index: 2000;
   background: #ffffff;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start; 
-  padding: 110px 24px 60px;  /* was 230px — pulled the menu items up under the nav bar */
+  padding: 110px 24px 60px;
   overflow-y: auto;
   border-right: 1px solid var(--border);
   transform: translateX(-100%);
@@ -161,6 +136,7 @@ nav.open {
 .overlay-menu.open { 
   transform: translateX(0);
 }
+
 .overlay-inner-content {
   width: 100%;
   max-width: 600px;
@@ -169,6 +145,7 @@ nav.open {
   align-items: center;
   gap: clamp(18px, 4vh, 32px);
 }
+
 .overlay-menu a, .nav-item-label {
   font-size: 26px;
   font-weight: 800;
@@ -226,86 +203,96 @@ nav.open {
 }
 .nav-dropdown a:hover { color: var(--black); background: rgba(0,0,0,.05); }
 
-/* ── LAYOUT MAIN CONTAINER ── */
+/* MAIN LAYOUT */
 main {
   flex: 1;
-  padding-top: 90px; 
+  padding-top: 90px;
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-}
+} 
 body.menu-open main {
   margin-left: 50%;
   width: 50%;
 }
-/* ── HERO VIEWPORT (title + image fill the screen below the nav; footer sits just after) ── */
-.hero-viewport {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 90px);
-  overflow: hidden;
-  width:100%;
-}
 
-/* ── PAGE TITLE (same typography as every other page's title) ── */
-.slogan-under-truck {
-  text-align: center;
-  width: 100%;
-  background: #ffffff;
-  padding: 1vh 24px 0.3vh; 
-  margin-bottom: 10px;
-  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-  font-size: clamp(18px, 2.8vw, 26px);
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  line-height: 1.1;
-  text-transform: uppercase;
-  color: var(--black);
-}
+.page-wrap{display:flex;flex-direction:column;align-items:center;padding:32px 48px 64px;}
+.content-wide{width:100%;max-width:860px;margin-top:20px;text-align:center;display:flex;flex-direction:column;align-items:center;}
 
-
-/* ── IMAGE CONTAINER (fills whatever space is left after the title, image scales to fit) ── */
-.page-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-  justify-content: center;
-  width: 100%;
-  flex: 1; 
-  min-height: 0;
-  padding:20px;
-}
 .image-container {
-  position: relative;
   width: 100%;
-  background: #ffffff;
+  max-width: 920px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 40px;
-  box-sizing: border-box;
-  flex: 1;
-  min-height: 0;
+  margin-bottom: 20px;
 }
-.cart-img {
-  display: block;
-  width: auto;
+.coming-soon-img {
+  width: 100%;
   height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  max-height: calc(100vh - 120px);
-  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+}
+.hours-table {
+  width: 100%;       /* Ensures it takes up the full width of its parent */
+  max-width: 300px;  /* Keeps it from getting too wide */
+  border-collapse: collapse;
 }
 
-/* ── MINIMAL FOOTER ── */
+.hours-table td {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;        /* Consistent bold weight */
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #111;
+  padding: 4px 0;
+}
+
+/* Forces the first column (Days) to the left */
+.hours-table td:nth-child(1) {
+  text-align: left;
+}
+
+/* Forces the second column (Times) to the right */
+.hours-table td:nth-child(2) {
+  text-align: left;      /* Change from right to left */
+  padding-left: 21px;    /* This creates the consistent gap you see in your design */
+  width: auto;           /* Let it flow naturally */
+}
+.do-row td:nth-child(2) {
+  padding-left: 20px; /* Adjust this value to get exactly the space you want */
+}
+.info-grid{display:flex;flex-direction:column;align-items:flex-start;gap:40px;margin-top:28px;text-align:left;width:100%;max-width:520px;}
+.info-card{padding:10px 0;width:100%;max-width:400px;text-align:left;}
+.info-card h3{
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: black;
+  margin-bottom: 14px;
+}
+.info-card p{
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important; /* Forces bold everywhere */
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #111 !important;
+  margin: 0 0 4px 0; /* Keeps lines uniform */
+  line-height: 1.6;/* Changed from #333 to black */
+}
+.info-card strong{color:var(--black);}
+
+/* MINIMAL FOOTER */
 .footer-minimal {
   background: #fff;
   color: rgba(0,0,0,.45);
-  padding: 12px 48px;
+  padding: 24px 48px;
   border-top: 1px solid var(--border);
   margin-top: auto; 
   display: flex;
@@ -342,19 +329,20 @@ body.menu-open .footer-minimal {
   text-align: right;
 }
 
-/* ── RESPONSIVE MEDIA BREAKPOINTS ── */
-@media(max-width:900px) {
-  nav { padding: 18px 20px; }
+@media(max-width:900px){
+  nav{padding:18px 20px;}
   main { padding-top: 85px; }
-  .footer-minimal { padding: 12px 24px; }
-  .overlay-menu { padding-top: 100px; } /* was 210px */
-  .hero-viewport { height: calc(100vh - 85px); }
-  .cart-img { max-height: calc(100vh - 115px); }
+  .loc-hero-title { padding: 30px 24px 16px; }
+  .page-wrap{padding:32px 24px 52px;}
+  .info-grid{gap:32px;}
+  .footer-minimal { padding: 24px 24px; }
+  .overlay-menu { padding-top: 100px; }
 }
-@media (max-width: 600px) {
-  nav { padding: 16px 16px; }
+@media(max-width:600px){
+  nav{padding:16px 16px;}
   main { padding-top: 70px; }
-  
+  .loc-hero-title { padding: 24px 16px 12px; }
+
   body.menu-open main {
     margin-left: 0;
     width: 100%;
@@ -362,37 +350,29 @@ body.menu-open .footer-minimal {
   body.menu-open .footer-minimal {
     margin-left: 0;
     width: 100%;
-    padding: 12px 16px;
+    padding: 20px 16px;
   }
-  body.menu-open .slogan-under-truck {
-    margin-left: 0;
-    width: 100%;
+  body.menu-open .loc-hero-title {
     opacity: 0;
     visibility: hidden;
-    display: none; 
+    display: none;
   }
 
-  .overlay-menu { 
-    width: 100%; 
-    padding: 90px 16px 40px;  /* was 110px */
+  .overlay-menu {
+    width: 100%;
+    padding: 90px 16px 40px;
     border-right: none;
-  } 
-  
-  .image-container { padding: 0 2px; }
-  .slogan-under-truck {
-    padding: 8px 16px 3px;
-    font-size: clamp(15px, 5vw, 19px);
-    letter-spacing: -0.1px;
   }
-  .hero-viewport { height: calc(100vh - 70px); }
-  .cart-img { max-height: calc(100vh - 95px); }
 
+  .page-wrap{padding:32px 16px 44px;}
+  .image-container { max-width: 520px; }
+  
   .footer-minimal {
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     text-align: center;
-    padding: 12px 16px;
+    padding: 20px 16px;
   }
   .footer-copy {
     margin-left: 0;
@@ -406,7 +386,6 @@ body.menu-open .footer-minimal {
 </style>
 </head>
 <body>
-
 <nav id="mainNavbar">
   <div class="nav-top-row">
     <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -426,7 +405,7 @@ body.menu-open .footer-minimal {
 
 <div class="overlay-menu" id="overlayMenu">
   <div class="overlay-inner-content">
-    <a href="index.html" data-i18n="fhome">Home</a>
+    <a href="index.html" data-i18n="nav-home">Home</a>
     <a href="menu.html" data-i18n="nav-menu">Menü</a>
     <div class="nav-item" id="navLocItem">
       <div class="nav-item-label">
@@ -445,24 +424,44 @@ body.menu-open .footer-minimal {
 </div>
 
 <main>
-  <div class="hero-viewport">
-    <div class="slogan-under-truck">Quality Sandwich Joint For All</div>
+  <div class="loc-hero-title">
+    <h1 data-i18n="nav-susi">SUSI</h1>
+    <p data-i18n="loc-susi-sub">Sternschanze | Susannenstr. 1</p>
+  </div>
 
-    <div class="page-wrap">
+  <div class="page-wrap">
+    <div class="content-wide">
       <div class="image-container">
-        <img class="cart-img" src="images/daners logo in illustration form.jpg" alt="Daners Food Truck">  
+        <img class="coming-soon-img" src="images/comingsoon.jpg" alt="Coming Soon Sternschanze">
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+  
+  <table class="hours-table">
+    <tr><td>MO. – MI.</td><td>11.00–21.00</td></tr>
+    <tr class="do-row"><td>DO.</td><td>11.00–23.00</td></tr>
+    <tr><td>FR. – SA.</td><td>11.00–01.00</td></tr>
+    <tr><td>SO.</td><td>11.00–21.00</td></tr>
+  </table>
+</div>
+        <div class="info-card">
+          
+          <p>Susannenstr. 1<br>20357 Hamburg<br></p>
+          
+        </div>
       </div>
     </div>
   </div>
-
-  <footer class="footer-minimal">
-    <div class="footer-legal">
-      <a href="imprint.html" data-i18n="f-imprint">Imprint</a>
-      <a href="privacy.html" data-i18n="f-privacy">Data Privacy</a>
-    </div>
-    <div class="footer-copy" data-i18n="fcopy">© 2026 DANERS – Beef & Bread GmbH</div>
-  </footer>
 </main>
+
+<footer class="footer-minimal">
+  <div class="footer-legal">
+    <a href="imprint.html" data-i18n="f-imprint">Imprint</a>
+    <a href="privacy.html" data-i18n="f-privacy">Data Privacy</a>
+  </div>
+  <div class="footer-copy" data-i18n="fcopy">© 2026 DANERS – Beef & Bread GmbH</div>
+</footer>
 
 <script>
 const menuBtn=document.getElementById('menuBtn');
@@ -474,7 +473,7 @@ function closeMenu() {
   menuBtn.classList.remove('open');
   mainNavbar.classList.remove('open');
   document.body.classList.remove('menu-open');
-  document.body.style.overflow=''; 
+  document.body.style.overflow='';
 }
 
 menuBtn.addEventListener('click',()=>{
@@ -501,30 +500,10 @@ if(navLocItem){
 
 const translations={
   "de": {
-    "nav-about": "Über uns", 
-    "nav-menu": "Menü", 
-    "nav-locations": "Locations", 
-    "nav-jobs": "Jobs", 
-    "nav-contact": "Kontakt", 
-    "nav-isemarkt": "Isemarkt", 
-    "nav-susi": "Sternschanze", 
-    "fhome": "Home", 
-    "fcopy": "© 2026 DANERS – Beef & Bread GmbH", 
-    "f-imprint": "Impressum", 
-    "f-privacy": "Datenschutz"
+    "nav-home": "Home", "nav-about": "Über uns", "nav-menu": "Menü", "nav-locations": "Locations", "nav-jobs": "Jobs", "nav-contact": "Kontakt", "nav-isemarkt": "Isemarkt", "nav-susi": "SUSI", "fcopy": "© 2026 DANERS – Beef & Bread GmbH", "f-imprint": "Impressum", "f-privacy": "Datenschutz", "loc-hours": "Öffnungszeiten", "loc-address": "Adresse", "loc-susi-sub": "Sternschanze | Susannenstr. 1", "loc-coming-title": "Demnächst mehr Informationen", "loc-coming-text": "Diese Seite wird gerade eingerichtet. Schau bald wieder vorbei!", "loc-sbahn": "S-Bahn: Sternschanze (S3/S31)"
   }, 
   "en": {
-    "nav-about": "About Us", 
-    "nav-menu": "Menu", 
-    "nav-locations": "Locations", 
-    "nav-jobs": "Jobs", 
-    "nav-contact": "Contact", 
-    "nav-isemarkt": "Isemarkt", 
-    "nav-susi": "Sternschanze", 
-    "fhome": "Home", 
-    "fcopy": "© 2026 DANERS – Beef & Bread GmbH", 
-    "f-imprint": "Imprint", 
-    "f-privacy": "Data Privacy"
+    "nav-home": "Home", "nav-about": "About Us", "nav-menu": "Menu", "nav-locations": "Locations", "nav-jobs": "Jobs", "nav-contact": "Contact", "nav-isemarkt": "Isemarkt", "nav-susi": "SUSI", "fcopy": "© 2026 DANERS – Beef & Bread GmbH", "f-imprint": "Imprint", "f-privacy": "Data Privacy", "loc-hours": "Opening Hours", "loc-address": "Address", "loc-susi-sub": "Sternschanze | Susannenstr. 1", "loc-coming-title": "More Information Coming Soon", "loc-coming-text": "This page is being set up. Check back soon!", "loc-sbahn": "S-Bahn: Sternschanze (S3/S31)"
   }
 };
 
@@ -535,7 +514,9 @@ function applyLang(lang){
   const t=translations[lang]||{};
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.getAttribute('data-i18n');
-    if(t[k]!=null)el.textContent=t[k];
+    if(t[k] !== undefined && t[k] !== null) {
+      el.textContent=t[k];
+    }
   });
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
   document.documentElement.lang=lang;
