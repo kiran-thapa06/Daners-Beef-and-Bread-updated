@@ -37,21 +37,25 @@ body {
   flex-direction: column;
 }
 
-/* ── FIXED TOP NAVIGATION BAR ── */
+/* ── FIXED TOP NAVIGATION BAR (matches index.html) ── */
 nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 2001;
-  background: #ffffff;
   display: flex;
-  flex-direction: column;
-  padding: 15px 40px 10px 40px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
   transition: background 0.3s;
 }
 nav.open {
   background: #ffffff;
+  backdrop-filter: none;
 }
 .nav-top-row {
   display: flex;
@@ -136,54 +140,53 @@ nav.open {
 }
 .nav-social a:hover { opacity: .4; }
 
-/* ── STICKY BRAND HEADER ── */
-.brand-header-sticky {
+/* ── PAGE TITLE HEADER (now page content, sits below the nav like index.html's slogan) ── */
+.menu-title-header {
   text-align: center;
   width: 100%;
-  margin-top: 75px; 
   background: #ffffff;
-  transition: opacity 0.2s ease, visibility 0.2s;
+  padding: 40px 24px 20px;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.brand-header-sticky h1 {
-  font-size: clamp(32px, 6vw, 48px);
+.menu-title-header h1 {
+  font-size: clamp(24px, 4.5vw, 42px);
   font-weight: 900;
-  letter-spacing: -1.5px;
-  line-height: 1;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
   margin: 0;
   text-transform: uppercase;
   color: var(--black);
 }
-.brand-header-sticky p {
+.menu-title-header p {
   font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
+  font-weight: 300;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gray);
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
-nav.open .brand-header-sticky {
-  display: none; /* FIX: Prevents elements from taking up layout spacing when invisible */
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-/* ── OVERLAY MENU — CENTERING FIXES WITH SAFE AREA SPACING ── */
+/* ── SIDE DRAWER OVERLAY MENU (Restored Previous Style) ── */
 .overlay-menu {
-  display: none;
+  display: flex;
   position: fixed;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%; 
   z-index: 2000;
   background: #ffffff;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Changed from center to top alignment to accommodate top padding safety area */
-  padding: 130px 24px 40px; /* Safely positions the first item right below the menu icons */
+  justify-content: flex-start; 
+  padding: 110px 24px 60px;  /* matches index.html — nav is now the same single-row height */
   overflow-y: auto;
+  border-right: 1px solid var(--border);
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .overlay-menu.open { 
-  display: flex; 
+  transform: translateX(0);
 }
 
 .overlay-inner-content {
@@ -192,7 +195,7 @@ nav.open .brand-header-sticky {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(20px, 4.5vh, 36px); 
+  gap: clamp(18px, 4vh, 32px);
 }
 
 .overlay-menu a, .nav-item-label {
@@ -251,20 +254,29 @@ nav.open .brand-header-sticky {
 }
 .nav-dropdown a:hover { color: var(--black); background: rgba(0,0,0,.05); }
 
-/* ── LAYOUT & ALIGNMENT MECHANICS ── */
+/* ── LAYOUT MECHANICS WITH VISIBLE SHIFTING CONTENT ── */
 main {
   flex: 1;
-  padding-top: 220px; 
+  padding-top: 90px; 
   position: relative;
   z-index: 1;
-} 
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+body.menu-open main {
+  margin-left: 50%;
+  width: 50%;
+}
+
 .menu-page-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
   background: #ffffff;
   width: 100%;
-  padding: 0 0 64px; 
+  padding: 8px 0 64px; 
 }
 
 .menu-content-container {
@@ -279,13 +291,16 @@ main {
 
 .menu-img-container {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .menu-img-container img {
-  width: 100%;
-  height: auto;
   display: block;
-  border-radius: 0;
-  box-shadow: none;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 210px);
+  object-fit: contain;
 }
 
 .menu-note-container {
@@ -295,11 +310,11 @@ main {
   text-align: center;
 }
 .menu-note-text {
-  font-size: clamp(13px, 1.8vw, 15px);
-  line-height: 1.65;
-  color: var(--black);
+  font-size: 14px;
+  line-height: 1.9;
+  color: #333;
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   text-transform: uppercase; 
   background: #ffffff; 
   word-spacing: 0.05em;
@@ -321,7 +336,14 @@ main {
   flex-wrap: wrap;
   font-size: 12px;
   letter-spacing: .02em;
+  transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+body.menu-open .footer-minimal {
+  margin-left: 50%;
+  width: 50%;
+}
+
 .footer-legal {
   display: flex;
   align-items: center;
@@ -344,19 +366,43 @@ main {
 
 /* ── RESPONSIVE MEDIA BREAKPOINTS ── */
 @media(max-width:900px) {
-  nav { padding: 13px 20px 10px; }
-  main { padding-top: 220px; }
-  .menu-page-wrap { padding: 0 0 52px; }
+  nav { padding: 18px 20px; }
+  main { padding-top: 85px; }
+  .menu-title-header { padding: 30px 24px 16px; }
+  .menu-page-wrap { padding: 8px 0 52px; }
+  .menu-img-container img { max-height: calc(100vh - 190px); }
   .footer-minimal { padding: 24px 24px; }
+  .overlay-menu { padding-top: 100px; }
 }
 @media (max-width: 600px) {
-  nav { padding: 12px 16px 8px; }
-  .brand-header-sticky { margin-top: 40px; } 
-  main { padding-top: 155px; }
+  nav { padding: 16px 16px; }
+  main { padding-top: 70px; }
+  .menu-title-header { padding: 24px 16px 12px; }
+  .menu-img-container img { max-height: calc(100vh - 145px); }
   
-  .overlay-menu { padding: 110px 16px 40px; } 
+  body.menu-open main {
+    margin-left: 0;
+    width: 100%;
+  }
+  body.menu-open .footer-minimal {
+    margin-left: 0;
+    width: 100%;
+  }
+  body.menu-open .menu-title-header {
+    margin-left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    display: none; 
+  }
+
+  .overlay-menu { 
+    width: 100%; 
+    padding: 90px 16px 40px;
+    border-right: none;
+  } 
   
-  .menu-page-wrap { padding: 0 0 44px; }
+  .menu-page-wrap { padding: 8px 0 44px; }
   .menu-content-container { padding: 0 24px; }
   .menu-note-container { 
     max-width: 88%; 
@@ -365,7 +411,7 @@ main {
   }
   .menu-note-text {
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.7;
   }
   .footer-minimal {
     flex-direction: column;
@@ -402,11 +448,6 @@ main {
       </div>
     </div>
   </div>
-
-  <div class="brand-header-sticky">
-    <h1 data-i18n="nav-menu">MENÜ</h1>
-    <p>SLOW FOOD — SERVED FAST</p>
-  </div>
 </nav>
 
 <div class="overlay-menu" id="overlayMenu">
@@ -430,6 +471,11 @@ main {
 </div>
 
 <main>
+  <div class="menu-title-header">
+    <h1 data-i18n="nav-menu">MENÜ</h1>
+    <p>SLOW FOOD — SERVED FAST</p>
+  </div>
+
   <div class="menu-page-wrap">
     <div class="menu-content-container">
       <div class="menu-img-container">
@@ -450,11 +496,10 @@ main {
     <a href="imprint.html" data-i18n="f-imprint">Imprint</a>
     <a href="privacy.html" data-i18n="f-privacy">Data Privacy</a>
   </div>
-  <div class="footer-copy" data-i18n="fcopy">© 2026 DANERS’ Beef & Bread GmbH</div>
+  <div class="footer-copy" data-i18n="fcopy">© 2026 DANERS – Beef & Bread GmbH</div>
 </footer>
 
 <script>
-/* Navigation Logic */
 const menuBtn=document.getElementById('menuBtn');
 const overlayMenu=document.getElementById('overlayMenu');
 const mainNavbar=document.getElementById('mainNavbar');
@@ -463,14 +508,16 @@ function closeMenu() {
   overlayMenu.classList.remove('open');
   menuBtn.classList.remove('open');
   mainNavbar.classList.remove('open');
-  document.body.style.overflow='';
+  document.body.classList.remove('menu-open');
+  /* Removed layout lock so content is interactable/viewable while open */
+  document.body.style.overflow=''; 
 }
 
 menuBtn.addEventListener('click',()=>{
   const o=overlayMenu.classList.toggle('open');
   menuBtn.classList.toggle('open',o);
   mainNavbar.classList.toggle('open',o);
-  document.body.style.overflow=o?'hidden':'';
+  document.body.classList.toggle('menu-open',o);
 });
 
 overlayMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeMenu));
@@ -484,7 +531,6 @@ document.addEventListener('keydown',e=>{
 const navLocItem=document.getElementById('navLocItem');
 if(navLocItem)navLocItem.querySelector('.nav-item-label').addEventListener('click',()=>navLocItem.classList.toggle('open'));
 
-/* Internationalization / Translation Dataset */
 const translations={
   "de": {
     "nav-about": "Über uns", 
@@ -496,7 +542,7 @@ const translations={
     "nav-isemarkt": "Isemarkt", 
     "nav-susi": "Sternschanze", 
     "fhome": "Home", 
-    "fcopy": "© 2026 DANERS’ Beef & Bread GmbH", 
+    "fcopy": "© 2026 DANERS – Beef & Bread GmbH", 
     "f-imprint": "Impressum", 
     "f-privacy": "Datenschutz"
   }, 
@@ -510,7 +556,7 @@ const translations={
     "nav-isemarkt": "Isemarkt", 
     "nav-susi": "Sternschanze", 
     "fhome": "Home", 
-    "fcopy": "© 2026 DANERS’ Beef & Bread GmbH", 
+    "fcopy": "© 2026 DANERS – Beef & Bread GmbH", 
     "f-imprint": "Imprint", 
     "f-privacy": "Data Privacy"
   }
