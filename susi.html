@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>SUSI – DANERS’</title>
+  <title>SUSI – DANERS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -192,12 +192,14 @@ nav.open {
 }
 .nav-item.open .nav-dropdown { display: flex; }
 .nav-dropdown a {
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  font-weight: 400;
+   font-family: 'Poppins', sans-serif; /* Ensures consistent font */
+  font-size: 14px;                   /* Matches the smaller info section size */
+  font-weight: 500;                  /* Matches the bold weight */
+  text-transform: uppercase;         /* Matches the uppercase look */
+  letter-spacing: 0.15em;            /* Matches the spacing in your image */
   text-decoration: none;
   color: var(--gray);
-  padding: 6px 28px;
+  padding: 8px 28px;
   border-radius: 4px;
   transition: color .2s, background .2s;
 }
@@ -236,6 +238,7 @@ body.menu-open main {
   border-radius: 4px;
 }
 .hours-table {
+  
   width: 100%;       /* Ensures it takes up the full width of its parent */
   max-width: 300px;  /* Keeps it from getting too wide */
   border-collapse: collapse;
@@ -243,12 +246,14 @@ body.menu-open main {
 
 .hours-table td {
   font-family: 'Poppins', sans-serif;
-  font-weight: 700;        /* Consistent bold weight */
-  font-size: 14px;
-  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1.9;
+  font-weight: 700;
   letter-spacing: 0.15em;
-  color: #111;
-  padding: 4px 0;
+  text-transform: uppercase;
+  color: black;
+  margin-top: 2px;
+  margin-bottom: 0;
 }
 
 /* Forces the first column (Days) to the left */
@@ -277,14 +282,15 @@ body.menu-open main {
   margin-bottom: 14px;
 }
 .info-card p{
-  font-family: 'Poppins', sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 700 !important; /* Forces bold everywhere */
-  text-transform: uppercase;
+font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  line-height: 1.9;
+  font-weight: 700;
   letter-spacing: 0.15em;
-  color: #111 !important;
-  margin: 0 0 4px 0; /* Keeps lines uniform */
-  line-height: 1.6;/* Changed from #333 to black */
+  text-transform: uppercase;
+  color: black;
+  margin-top: 2px;
+  margin-bottom: 0;
 }
 .info-card strong{color:var(--black);}
 
@@ -414,7 +420,7 @@ body.menu-open .footer-minimal {
       </div>
       <div class="nav-dropdown">
         <a href="isemarkt.html" data-i18n="nav-isemarkt">Isemarkt</a>
-        <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
+        <a href="susi.html" data-i18n="nav-susi-link">Sternschanze</a>
       </div>
     </div>
     <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
@@ -500,10 +506,10 @@ if(navLocItem){
 
 const translations={
   "de": {
-    "nav-home": "Home", "nav-about": "Über uns", "nav-menu": "Menü", "nav-locations": "Locations", "nav-jobs": "Jobs", "nav-contact": "Kontakt", "nav-isemarkt": "Isemarkt", "nav-susi": "SUSI", "fcopy": "© 2026 DANERS – Beef & Bread GmbH", "f-imprint": "Impressum", "f-privacy": "Datenschutz", "loc-hours": "Öffnungszeiten", "loc-address": "Adresse", "loc-susi-sub": "Sternschanze | Susannenstr. 1", "loc-coming-title": "Demnächst mehr Informationen", "loc-coming-text": "Diese Seite wird gerade eingerichtet. Schau bald wieder vorbei!", "loc-sbahn": "S-Bahn: Sternschanze (S3/S31)"
+    "nav-home": "Home", "nav-susi-link": "Sternschanze", "nav-about": "Über uns", "nav-menu": "Menü", "nav-locations": "Locations", "nav-jobs": "Jobs", "nav-contact": "Kontakt", "nav-isemarkt": "Isemarkt", "nav-susi": "SUSI", "fcopy": "© 2026 DANERS – Beef & Bread GmbH", "f-imprint": "Impressum", "f-privacy": "Datenschutz", "loc-hours": "Öffnungszeiten", "loc-address": "Adresse", "loc-susi-sub": "Sternschanze | Susannenstr. 1", "loc-coming-title": "Demnächst mehr Informationen", "loc-coming-text": "Diese Seite wird gerade eingerichtet. Schau bald wieder vorbei!", "loc-sbahn": "S-Bahn: Sternschanze (S3/S31)"
   }, 
   "en": {
-    "nav-home": "Home", "nav-about": "About Us", "nav-menu": "Menu", "nav-locations": "Locations", "nav-jobs": "Jobs", "nav-contact": "Contact", "nav-isemarkt": "Isemarkt", "nav-susi": "SUSI", "fcopy": "© 2026 DANERS – Beef & Bread GmbH", "f-imprint": "Imprint", "f-privacy": "Data Privacy", "loc-hours": "Opening Hours", "loc-address": "Address", "loc-susi-sub": "Sternschanze | Susannenstr. 1", "loc-coming-title": "More Information Coming Soon", "loc-coming-text": "This page is being set up. Check back soon!", "loc-sbahn": "S-Bahn: Sternschanze (S3/S31)"
+    "nav-home": "Home", "nav-about": "About Us","nav-susi-link": "Sternschanze", "nav-menu": "Menu", "nav-locations": "Locations", "nav-jobs": "Jobs", "nav-contact": "Contact", "nav-isemarkt": "Isemarkt", "nav-susi": "SUSI", "fcopy": "© 2026 DANERS – Beef & Bread GmbH", "f-imprint": "Imprint", "f-privacy": "Data Privacy", "loc-hours": "Opening Hours", "loc-address": "Address", "loc-susi-sub": "Sternschanze | Susannenstr. 1", "loc-coming-title": "More Information Coming Soon", "loc-coming-text": "This page is being set up. Check back soon!", "loc-sbahn": "S-Bahn: Sternschanze (S3/S31)"
   }
 };
 
