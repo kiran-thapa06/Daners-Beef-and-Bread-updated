@@ -95,9 +95,11 @@ nav.open {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: clamp(10px, 3vw, 20px);
   position: relative;
   z-index: 2005;
+  flex-shrink: 1;
+  min-width: 0;
 }
 .lang-switcher {
   display: flex;
@@ -128,8 +130,9 @@ nav.open {
 
 .nav-social {
   display: flex;
-  gap: 16px;
+  gap: clamp(8px, 2.5vw, 16px);
   align-items: center;
+  flex-shrink: 0;
 }
 .nav-social a {
   color: var(--black);
@@ -306,13 +309,14 @@ body.menu-open .loc-hero-title {
 }
 
 .info-grid-clean {
-  display: flex;
+ display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
   gap: 28px;
-  border-top: 1px solid var(--border);
+ 
   padding-top: 40px;
+  margin-left: clamp(0px, 12vw, 150px);
 }
 .info-col {
   flex: 0 1 auto;
@@ -383,40 +387,36 @@ body.menu-open .footer-minimal {
 }
 
 /* ── RESPONSIVE MEDIA BREAKPOINTS ── */
+@media(min-width:1400px) {
+  .loc-content-inner { max-width: 900px; }
+}
+
 @media(max-width:900px) {
   nav { padding: 18px 20px; }
   main { padding-top: 85px; }
   .loc-hero-title { padding: 30px 24px 16px; }
   .footer-minimal { padding: 24px 24px; }
-  .overlay-menu { padding-top: 100px; }
+  .overlay-menu { width: 100%; padding-top: 100px; border-right: none; }
+  .overlay-menu a, .nav-item-label { font-size: 24px; }
+
+  /* Below 900px the drawer becomes a full-screen overlay instead of pushing content aside */
+  body.menu-open main { margin-left: 0; width: 100%; }
+  body.menu-open .footer-minimal { margin-left: 0; width: 100%; }
+  body.menu-open .loc-hero-title { opacity: 0; visibility: hidden; display: none; }
 }
 @media (max-width: 600px) {
   nav { padding: 16px 16px; }
   main { padding-top: 70px; }
   .loc-hero-title { padding: 24px 16px 12px; }
-  
-  body.menu-open main {
-    margin-left: 0;
-    width: 100%;
-  }
+
   body.menu-open .footer-minimal {
-    margin-left: 0;
-    width: 100%;
     padding: 20px 16px;
   }
-  body.menu-open .loc-hero-title {
-    margin-left: 0;
-    width: 100%;
-    opacity: 0;
-    visibility: hidden;
-    display: none; 
-  }
 
-  .overlay-menu { 
-    width: 100%; 
+  .overlay-menu {
     padding: 90px 16px 40px; 
-    border-right: none;
-  } 
+  }
+  .overlay-menu a, .nav-item-label { font-size: 22px; }
   
   .loc-hero { padding: 32px 20px 0; }
   .loc-content-panel { padding: 32px 20px 48px; }
@@ -436,6 +436,29 @@ body.menu-open .footer-minimal {
     justify-content: center;
     gap: 14px;
   }
+}
+
+@media(max-width:400px) {
+  nav{padding:14px 12px;}
+  .nav-right{gap:8px;}
+  .lang-btn{padding:4px 8px;font-size:10px;}
+  .nav-social{gap:8px;}
+  .nav-social svg{width:18px;height:18px;}
+  .loc-hero-title h1{font-size:22px;}
+  .loc-hero-title p{font-size:10px;letter-spacing:0.14em;}
+  .loc-hero{padding:24px 12px 0;}
+  .loc-content-panel{padding:24px 12px 40px;}
+  .info-grid-clean{margin-left:0;gap:22px;}
+  .info-col p,.info-col .sub-info{font-size:11px;letter-spacing:0.1em;}
+  .overlay-menu a, .nav-item-label{font-size:20px;}
+}
+
+@media (max-width:600px) and (orientation:landscape){
+  main{padding-top:60px;}
+  .loc-hero-title{padding:16px 16px 8px;}
+  .overlay-menu{padding-top:70px;}
+  .overlay-inner-content{gap:14px;}
+  .overlay-menu a, .nav-item-label{font-size:20px;}
 }
 </style>
 </head>
@@ -499,7 +522,7 @@ body.menu-open .footer-minimal {
         <div class="info-col">
           
           <p class="sub-info">Dienstag & Freitag</p>
-          <p class="sub-info">9.00 – 14.00 Uhr</p>
+          <p class="sub-info">09.00 – 14.00</p>
         </div>
        
       </div>
