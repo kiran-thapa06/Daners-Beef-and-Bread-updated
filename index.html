@@ -215,12 +215,14 @@ nav.open {
 }
 .nav-item.open .nav-dropdown { display: flex; }
 .nav-dropdown a {
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  font-weight: 400;
+  font-family: 'Poppins', sans-serif; /* Ensures consistent font */
+  font-size: 14px;                   /* Matches the smaller info section size */
+  font-weight: 500;                  /* Matches the bold weight */
+  text-transform: uppercase;         /* Matches the uppercase look */
+  letter-spacing: 0.15em;            /* Matches the spacing in your image */
   text-decoration: none;
   color: var(--gray);
-  padding: 6px 28px;
+  padding: 8px 28px;
   border-radius: 4px;
   transition: color .2s, background .2s;
 }
