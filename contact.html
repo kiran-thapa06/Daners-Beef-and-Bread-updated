@@ -326,8 +326,8 @@ body.menu-open .site-footer {
       <!-- EVENTS -->
       <div class="tab-panel active" id="ctab-events">
         <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="ev-name" class="form-input" data-i18n-ph="ph-name" placeholder="Max Mustermann"></div>
-          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="ev-email" class="form-input" data-i18n-ph="ph-email" placeholder="max@beispiel.de"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="ev-name" class="form-input" required data-i18n-ph="ph-name" placeholder="Max Mustermann"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="ev-email" class="form-input" required data-i18n-ph="ph-email" placeholder="max@beispiel.de"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-phone">Telefon</label><input type="tel" id="ev-phone" class="form-input" data-i18n-ph="ph-phone" placeholder="+49 ..."></div>
           <div class="form-group"><label class="form-label" data-i18n="f-date">Datum des Events</label><input type="date" id="ev-date" class="form-input"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-guests">Anzahl der Gäste</label><input type="number" id="ev-guests" class="form-input" data-i18n-ph="ph-guests" placeholder="min. 25"></div>
@@ -336,30 +336,30 @@ body.menu-open .site-footer {
           <div class="form-group span2"><label class="form-label" data-i18n="f-msg">Nachricht</label><textarea id="ev-msg" class="form-textarea" data-i18n-ph="ph-msg-event" placeholder="Erzählt uns von eurem Event..."></textarea></div>
         </div>
         <div class="form-consent"><input type="checkbox" id="ev-consent"><label for="ev-consent" data-i18n="f-consent">Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzrichtlinie zu.</label></div>
-        <button class="form-submit" onclick="sendForm('ev','Private Feier/Event',['ev-name','ev-email','ev-phone','ev-date','ev-guests','ev-type','ev-msg'])" data-i18n="f-send">Anfrage senden</button>
+        <button class="form-submit" onclick="sendForm('ev','[EVENT]','Private Feier/Event',['ev-name','ev-email','ev-phone','ev-date','ev-guests','ev-type','ev-msg'])" data-i18n="f-send">Anfrage senden</button>
         <div class="form-success" id="ev-ok" data-i18n="f-ok">✓ Deine E-Mail-App öffnet sich. Bitte sende die Nachricht ab!</div>
       </div>
 
       <!-- ENQUIRY -->
       <div class="tab-panel" id="ctab-enquiry">
         <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="en-name" class="form-input" data-i18n-ph="ph-name" placeholder="Ihr Name"></div>
-          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="en-email" class="form-input" data-i18n-ph="ph-email" placeholder="ihre@mail.de"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="en-name" class="form-input" required data-i18n-ph="ph-name" placeholder="Ihr Name"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="en-email" class="form-input" required data-i18n-ph="ph-email" placeholder="ihre@mail.de"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-company">Unternehmen</label><input type="text" id="en-company" class="form-input" data-i18n-ph="ph-company" placeholder="Ihr Unternehmen"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-reqtype">Art der Anfrage</label>
             <select id="en-type" class="form-select"><option value="" data-i18n="f-choose">Bitte wählen</option><option>Kooperation</option><option>Sponsoring</option><option>Lizenz / Franchise</option><option>Sonstiges</option></select></div>
           <div class="form-group span2"><label class="form-label" data-i18n="f-projdesc">Projektbeschreibung</label><textarea id="en-msg" class="form-textarea" data-i18n-ph="ph-projdesc" placeholder="Beschreibt euer Projekt..."></textarea></div>
         </div>
         <div class="form-consent"><input type="checkbox" id="en-consent"><label for="en-consent" data-i18n="f-consent">Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzrichtlinie zu.</label></div>
-        <button class="form-submit" onclick="sendForm('en','Project Enquiry',['en-name','en-email','en-company','en-type','en-msg'])" data-i18n="f-send">Anfrage senden</button>
+        <button class="form-submit" onclick="sendForm('en','[ENQUIRY]','Project Enquiry',['en-name','en-email','en-company','en-type','en-msg'])" data-i18n="f-send">Anfrage senden</button>
         <div class="form-success" id="en-ok" data-i18n="f-ok">✓ E-Mail-App öffnet sich. Bitte sende die Nachricht ab!</div>
       </div>
 
       <!-- JOBS -->
       <div class="tab-panel" id="ctab-jobs">
         <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="jb-name" class="form-input" data-i18n-ph="ph-name" placeholder="Ihr Name"></div>
-          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="jb-email" class="form-input" data-i18n-ph="ph-email" placeholder="ihre@mail.de"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="jb-name" class="form-input" required data-i18n-ph="ph-name" placeholder="Ihr Name"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="jb-email" class="form-input" required data-i18n-ph="ph-email" placeholder="ihre@mail.de"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-phone">Telefon</label><input type="tel" id="jb-phone" class="form-input" data-i18n-ph="ph-phone" placeholder="+49 ..."></div>
           <div class="form-group"><label class="form-label" data-i18n="f-available">Verfügbar ab</label><input type="date" id="jb-date" class="form-input"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-worktype">Art der Beschäftigung</label>
@@ -368,22 +368,22 @@ body.menu-open .site-footer {
           <div class="form-group span2"><label class="form-label" data-i18n="f-why">Warum DANERS'?</label><textarea id="jb-msg" class="form-textarea" data-i18n-ph="ph-why" placeholder="Erzählt uns etwas über euch..."></textarea></div>
         </div>
         <div class="form-consent"><input type="checkbox" id="jb-consent"><label for="jb-consent" data-i18n="f-consent">Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzrichtlinie zu.</label></div>
-        <button class="form-submit" onclick="sendForm('jb','Bewerbung',['jb-name','jb-email','jb-phone','jb-date','jb-worktype','jb-social','jb-msg'])" data-i18n="f-apply">Bewerbung absenden</button>
+        <button class="form-submit" onclick="sendForm('jb','[JOB]','Bewerbung',['jb-name','jb-email','jb-phone','jb-date','jb-worktype','jb-social','jb-msg'])" data-i18n="f-apply">Bewerbung absenden</button>
         <div class="form-success" id="jb-ok" data-i18n="f-ok">✓ E-Mail-App öffnet sich. Bitte sende die Bewerbung ab!</div>
       </div>
 
       <!-- PRESS -->
       <div class="tab-panel" id="ctab-press">
         <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="pr-name" class="form-input" data-i18n-ph="ph-name" placeholder="Ihr Name"></div>
-          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="pr-email" class="form-input" data-i18n-ph="ph-email" placeholder="ihre@mail.de"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-name">Name</label><input type="text" id="pr-name" class="form-input" required data-i18n-ph="ph-name" placeholder="Ihr Name"></div>
+          <div class="form-group"><label class="form-label" data-i18n="f-email">E-Mail</label><input type="email" id="pr-email" class="form-input" required data-i18n-ph="ph-email" placeholder="ihre@mail.de"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-outlet">Medium / Outlet</label><input type="text" id="pr-outlet" class="form-input" data-i18n-ph="ph-outlet" placeholder="z.B. Hamburg Journal"></div>
           <div class="form-group"><label class="form-label" data-i18n="f-topic">Thema</label>
             <select id="pr-topic" class="form-select"><option value="" data-i18n="f-choose">Bitte wählen</option><option>Interview</option><option>Fotoshooting</option><option>Produkttest</option><option>Sonstiges</option></select></div>
           <div class="form-group span2"><label class="form-label" data-i18n="f-msg">Nachricht</label><textarea id="pr-msg" class="form-textarea" data-i18n-ph="ph-press-msg" placeholder="Was habt ihr geplant?"></textarea></div>
         </div>
         <div class="form-consent"><input type="checkbox" id="pr-consent"><label for="pr-consent" data-i18n="f-consent">Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzrichtlinie zu.</label></div>
-        <button class="form-submit" onclick="sendForm('pr','Press & Media',['pr-name','pr-email','pr-outlet','pr-topic','pr-msg'])" data-i18n="f-send">Anfrage senden</button>
+        <button class="form-submit" onclick="sendForm('pr','[PRESS]','Press & Media',['pr-name','pr-email','pr-outlet','pr-topic','pr-msg'])" data-i18n="f-send">Anfrage senden</button>
         <div class="form-success" id="pr-ok" data-i18n="f-ok">✓ E-Mail-App öffnet sich. Bitte sende die Nachricht ab!</div>
       </div>
 
@@ -447,7 +447,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   if(p){const b=document.querySelector('.tab-btn[data-tab="'+p+'"]');if(b)b.click();}
 })();
 
-function sendForm(prefix,subject,fieldIds){
+function sendForm(prefix,tag,subject,fieldIds){
   const consent=document.getElementById(prefix+'-consent');
   if(!consent.checked){
     alert(document.documentElement.lang==='en'
@@ -455,6 +455,25 @@ function sendForm(prefix,subject,fieldIds){
       :'Bitte stimme der Datenschutzerklärung zu.');
     return;
   }
+
+  const isEn = document.documentElement.lang==='en';
+  const nameEl = document.getElementById(prefix+'-name');
+  const emailEl = document.getElementById(prefix+'-email');
+  const nameVal = nameEl ? nameEl.value.trim() : '';
+  const emailVal = emailEl ? emailEl.value.trim() : '';
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if(!nameVal){
+    alert(isEn ? 'Please enter your name.' : 'Bitte gib deinen Namen ein.');
+    if(nameEl) nameEl.focus();
+    return;
+  }
+  if(!emailVal || !emailPattern.test(emailVal)){
+    alert(isEn ? 'Please enter a valid email address.' : 'Bitte gib eine gültige E-Mail-Adresse ein.');
+    if(emailEl) emailEl.focus();
+    return;
+  }
+
   let body='Category: '+subject+'\n\n';
   fieldIds.forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
@@ -464,8 +483,15 @@ function sendForm(prefix,subject,fieldIds){
     if(val)body+=lbl+': '+val+'\n';
   });
   body+='\n---\nSent from daners-website';
+
+  // Subject format: [CATEGORY] Type – Sender Name
+  // The bracketed tag stays first and constant per form so it can be used
+  // for inbox filters/rules, while the sender name makes each mail
+  // identifiable at a glance without opening it.
+  const emailSubject = tag+' '+subject+' – '+nameVal;
+
   window.location.href='mailto:Daners@beef-bread.de'
-    +'?subject='+encodeURIComponent('[DANERS] '+subject)
+    +'?subject='+encodeURIComponent(emailSubject)
     +'&body='+encodeURIComponent(body);
   const ok=document.getElementById(prefix+'-ok');
   if(ok){ok.style.display='block';setTimeout(()=>{ok.style.display='none';},8000);}
