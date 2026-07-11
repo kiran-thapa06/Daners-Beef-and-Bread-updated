@@ -260,15 +260,18 @@ body.menu-open main {
 
 /* ── PAGE TITLE (same typography as every other page's title) ── */
 .slogan-under-truck {
-  text-align: center;
+ text-align: center;
   width: 100%;
   background: #ffffff;
-  padding: 0 24px;
-  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-  font-size: clamp(18px, 2.8vw, 26px);
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  line-height: 1.1;
+   backdrop-filter:blur(10px);
+  /* Adjust this value to bring it closer to the image */
+  margin-top: -50px; 
+  /* Reduced padding to tighten the spacing */
+  padding: 10px 24px; 
+  font-size: 15px;
+  font-weight:800;
+  letter-spacing:.1em;
+  line-height:1.1;
   text-transform: uppercase;
   color: var(--black);
   flex-shrink: 0;
@@ -468,15 +471,17 @@ body.menu-open .footer-minimal {
 </div>
 
 <main>
-  <div class="hero-viewport">
-    <div class="slogan-under-truck">Quality Sandwich Joint For All</div>
-
+  <!-- Inside <main> -->
+<div class="hero-viewport">
+    
+    <!-- Image first -->
     <div class="page-wrap">
       <div class="image-container">
         <img class="cart-img" src="images/daners logo in illustration form.jpg" alt="Daners Food Truck">  
       </div>
     </div>
-  </div>
+
+    
 
   <footer class="footer-minimal">
     <div class="footer-legal">
