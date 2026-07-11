@@ -95,7 +95,9 @@ nav.open {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: clamp(10px, 3vw, 20px);
+  flex-shrink: 1;
+  min-width: 0;
 }
 .lang-switcher {
   display: flex;
@@ -126,8 +128,9 @@ nav.open {
 
 .nav-social {
   display: flex;
-  gap: 16px;
+  gap: clamp(8px, 2.5vw, 16px);
   align-items: center;
+  flex-shrink: 0;
 }
 .nav-social a {
   color: var(--black);
@@ -246,9 +249,13 @@ body.menu-open main {
 .hero-viewport {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: calc(100vh - 90px);
+  height: calc(100dvh - 90px);
   overflow: hidden;
   width:100%;
+  gap: clamp(8px, 2.5vh, 24px);
 }
 
 /* ── PAGE TITLE (same typography as every other page's title) ── */
@@ -256,8 +263,7 @@ body.menu-open main {
   text-align: center;
   width: 100%;
   background: #ffffff;
-  padding: 1vh 24px 0.3vh; 
-  margin-bottom: 10px;
+  padding: 0 24px;
   transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
   font-size: clamp(18px, 2.8vw, 26px);
   font-weight: 600;
@@ -265,21 +271,20 @@ body.menu-open main {
   line-height: 1.1;
   text-transform: uppercase;
   color: var(--black);
+  flex-shrink: 0;
 }
 
 
 /* ── IMAGE CONTAINER (fills whatever space is left after the title, image scales to fit) ── */
 .page-wrap {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
   justify-content: center;
   width: 100%;
-  flex: 1; 
   min-height: 0;
-  padding:20px;
+  padding: 0 20px;
 }
 .image-container {
   position: relative;
@@ -288,9 +293,8 @@ body.menu-open main {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 20px 40px;
   box-sizing: border-box;
-  flex: 1;
   min-height: 0;
 }
 .cart-img {
@@ -300,6 +304,7 @@ body.menu-open main {
   max-width: 100%;
   max-height: 100%;
   max-height: calc(100vh - 120px);
+  max-height: calc(100dvh - 120px);
   object-fit: contain;
 }
 
@@ -345,49 +350,45 @@ body.menu-open .footer-minimal {
 }
 
 /* ── RESPONSIVE MEDIA BREAKPOINTS ── */
+@media(min-width:1400px) {
+  .slogan-under-truck { font-size: clamp(20px, 2vw, 30px); }
+}
+
 @media(max-width:900px) {
   nav { padding: 18px 20px; }
   main { padding-top: 85px; }
   .footer-minimal { padding: 12px 24px; }
-  .overlay-menu { padding-top: 100px; } /* was 210px */
-  .hero-viewport { height: calc(100vh - 85px); }
-  .cart-img { max-height: calc(100vh - 115px); }
+  .overlay-menu { width: 100%; padding-top: 100px; border-right: none; }
+  .overlay-menu a, .nav-item-label { font-size: 24px; }
+  .hero-viewport { height: calc(100vh - 85px); height: calc(100dvh - 85px); }
+  .cart-img { max-height: calc(100vh - 115px); max-height: calc(100dvh - 115px); }
+
+  /* Below 900px the drawer becomes a full-screen overlay instead of pushing content aside */
+  body.menu-open main { margin-left: 0; width: 100%; }
+  body.menu-open .footer-minimal { margin-left: 0; width: 100%; }
+  body.menu-open .slogan-under-truck { opacity: 0; visibility: hidden; display: none; }
 }
 @media (max-width: 600px) {
   nav { padding: 16px 16px; }
   main { padding-top: 70px; }
-  
-  body.menu-open main {
-    margin-left: 0;
-    width: 100%;
-  }
+
   body.menu-open .footer-minimal {
-    margin-left: 0;
-    width: 100%;
     padding: 12px 16px;
   }
-  body.menu-open .slogan-under-truck {
-    margin-left: 0;
-    width: 100%;
-    opacity: 0;
-    visibility: hidden;
-    display: none; 
-  }
 
-  .overlay-menu { 
-    width: 100%; 
+  .overlay-menu {
     padding: 90px 16px 40px;  /* was 110px */
-    border-right: none;
-  } 
-  
+  }
+  .overlay-menu a, .nav-item-label { font-size: 22px; }
+
   .image-container { padding: 0 2px; }
   .slogan-under-truck {
-    padding: 8px 16px 3px;
+    padding: 0 16px;
     font-size: clamp(15px, 5vw, 19px);
     letter-spacing: -0.1px;
   }
-  .hero-viewport { height: calc(100vh - 70px); }
-  .cart-img { max-height: calc(100vh - 95px); }
+  .hero-viewport { height: calc(100vh - 70px); height: calc(100dvh - 70px); }
+  .cart-img { max-height: calc(100vh - 95px); max-height: calc(100dvh - 95px); }
 
   .footer-minimal {
     flex-direction: column;
@@ -404,6 +405,26 @@ body.menu-open .footer-minimal {
     justify-content: center;
     gap: 14px;
   }
+}
+
+@media(max-width:400px) {
+  nav { padding: 14px 12px; }
+  .nav-right { gap: 8px; }
+  .lang-btn { padding: 4px 8px; font-size: 10px; }
+  .nav-social { gap: 8px; }
+  .nav-social svg { width: 18px; height: 18px; }
+  .overlay-menu a, .nav-item-label { font-size: 20px; }
+  .slogan-under-truck { font-size: clamp(13px, 5.5vw, 17px); }
+  .image-container { padding: 0; }
+}
+
+@media (max-width:900px) and (orientation:landscape) {
+  .hero-viewport { height: auto; min-height: calc(100vh - 85px); min-height: calc(100dvh - 85px); }
+  .cart-img { max-height: 60vh; max-height: 60dvh; }
+  .slogan-under-truck { padding: 0 16px; font-size: clamp(14px, 3vw, 18px); }
+  .overlay-menu { padding-top: 70px; }
+  .overlay-inner-content { gap: 12px; }
+  .overlay-menu a, .nav-item-label { font-size: 20px; }
 }
 </style>
 </head>
