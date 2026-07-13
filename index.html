@@ -217,19 +217,22 @@ nav.open {
   padding: 8px 0 4px;
 }
 .nav-item.open .nav-dropdown { display: flex; }
-.nav-dropdown a {
-  font-family: 'Poppins', sans-serif; /* Ensures consistent font */
-  font-size: 14px;                   /* Matches the smaller info section size */
-  font-weight: 500;                  /* Matches the bold weight */
-  text-transform: uppercase;         /* Matches the uppercase look */
-  letter-spacing: 0.15em;            /* Matches the spacing in your image */
+
+/* ID-scoped selector so this always wins over the media-query rules below,
+   regardless of source order or screen size. This is the fix. */
+#overlayMenu .nav-dropdown a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
   text-decoration: none;
   color: var(--gray);
   padding: 8px 28px;
   border-radius: 4px;
   transition: color .2s, background .2s;
 }
-.nav-dropdown a:hover { color: var(--black); background: rgba(0,0,0,.05); }
+#overlayMenu .nav-dropdown a:hover { color: var(--black); background: rgba(0,0,0,.05); }
 
 /* ── LAYOUT MAIN CONTAINER ── */
 main {
@@ -239,6 +242,7 @@ main {
   z-index: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
   transition: margin-left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 body.menu-open main {
@@ -251,8 +255,8 @@ body.menu-open main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 90px);
-  height: calc(100dvh - 90px);
+  flex: 1;
+  padding: 20px;
   overflow: hidden;
   width:100%;
   gap: clamp(8px, 2.5vh, 24px);
@@ -284,8 +288,10 @@ body.menu-open main {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  flex: 1;
   justify-content: center;
   width: 100%;
+  max-width:800px;
   min-height: 0;
   padding: 0 20px;
 }
@@ -297,6 +303,8 @@ body.menu-open main {
   justify-content: center;
   align-items: center;
   padding: 20px 40px;
+  width:100%;
+  height: 100%;
   box-sizing: border-box;
   min-height: 0;
 }
@@ -305,7 +313,7 @@ body.menu-open main {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 70vh;
   max-height: calc(100vh - 120px);
   max-height: calc(100dvh - 120px);
   object-fit: contain;
@@ -313,16 +321,18 @@ body.menu-open main {
 
 /* ── MINIMAL FOOTER ── */
 .footer-minimal {
+  width: 100%;
   background: #fff;
   color: rgba(0,0,0,.45);
   padding: 12px 48px;
   border-top: 1px solid var(--border);
   margin-top: auto; 
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   font-size: 12px;
   letter-spacing: .02em;
   transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
@@ -337,6 +347,7 @@ body.menu-open .footer-minimal {
   align-items: center;
   gap: 18px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 .footer-legal a {
   color: rgba(0,0,0,.55);
@@ -348,8 +359,8 @@ body.menu-open .footer-minimal {
 .footer-legal a:hover { color: var(--black); }
 .footer-copy {
   white-space: nowrap;
-  margin-left: auto;
   text-align: right;
+  flex-shrink: 0;
 }
 
 /* ── RESPONSIVE MEDIA BREAKPOINTS ── */
@@ -399,6 +410,7 @@ body.menu-open .footer-minimal {
     gap: 6px;
     text-align: center;
     padding: 12px 16px;
+    flex-wrap: wrap;
   }
   .footer-copy {
     margin-left: 0;
@@ -464,6 +476,7 @@ body.menu-open .footer-minimal {
         <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
       </div>
     </div>
+    <a href="findus.html" data-i18n="nav-findus" class="active-page">Findet uns</a>
     <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
     <a href="contact.html" data-i18n="nav-contact">Kontakt</a>
     <a href="about.html" data-i18n="nav-about">Über uns</a>
@@ -481,7 +494,7 @@ body.menu-open .footer-minimal {
       </div>
     </div>
 
-    
+  </div>
 
   <footer class="footer-minimal">
     <div class="footer-legal">
@@ -534,6 +547,7 @@ const translations={
     "nav-locations": "Locations", 
     "nav-jobs": "Jobs", 
     "nav-contact": "Kontakt", 
+    "nav-findus":"Findet uns",
     "nav-isemarkt": "Isemarkt", 
     "nav-susi": "Sternschanze", 
     "fhome": "Home", 
@@ -547,6 +561,7 @@ const translations={
     "nav-locations": "Locations", 
     "nav-jobs": "Jobs", 
     "nav-contact": "Contact", 
+    "nav-findus":"Find Us",
     "nav-isemarkt": "Isemarkt", 
     "nav-susi": "Sternschanze", 
     "fhome": "Home", 
