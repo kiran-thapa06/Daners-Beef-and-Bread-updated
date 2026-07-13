@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Find Us &ndash; DANERS&rsquo;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#111;--white:#ffffff;--gray:#888;--border:#e0e0e0;--faint:#f4f4f2;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;font-weight:300;background:#fff;color:var(--black);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
+
+/* ── NAV (matches index.html / isemarkt.html / susi.html / contact.html) ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:2001;display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:15px 40px;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);transition:background .3s;}
+nav.open{background:#ffffff;backdrop-filter:none;}
+.nav-top-row{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:6px;cursor:pointer;background:none;border:none;padding:4px;width:32px;height:32px;flex-shrink:0;position:relative;z-index:2005;}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--black);transition:transform .3s,opacity .3s;transform-origin:center;}
+.hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+.nav-right{display:flex;align-items:center;gap:clamp(10px,3vw,20px);position:relative;z-index:2005;flex-shrink:1;min-width:0;}
+.lang-switcher{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,.05);border-radius:20px;padding:3px 4px;}
+.lang-btn{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 10px;border:none;cursor:pointer;border-radius:16px;background:transparent;color:var(--gray);transition:all .2s;}
+.lang-btn.active{background:var(--black);color:#fff;}
+.lang-btn:hover:not(.active){color:var(--black);}
+.nav-social{display:flex;gap:clamp(8px,2.5vw,16px);align-items:center;flex-shrink:0;}
+.nav-social a{color:var(--black);text-decoration:none;display:flex;align-items:center;justify-content:center;transition:opacity .2s;}
+.nav-social a:hover{opacity:.4;}
+
+/* ── OVERLAY MENU ── */
+.overlay-menu{display:flex;position:fixed;top:0;bottom:0;left:0;width:50%;z-index:2000;background:#ffffff;flex-direction:column;align-items:center;justify-content:flex-start;padding:110px 24px 60px;overflow-y:auto;border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .35s cubic-bezier(.25,1,.5,1);}
+.overlay-menu.open{transform:translateX(0);}
+.overlay-inner-content{width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;gap:clamp(18px,4vh,32px);}
+.overlay-menu a,.nav-item-label{font-family:'Poppins',sans-serif;font-size:26px;font-weight:800;text-decoration:none;color:var(--black);text-transform:uppercase;letter-spacing:-.5px;padding:2px 0;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;user-select:none;}
+.overlay-menu > div.nav-item{display:flex;flex-direction:column;align-items:center;}
+.overlay-menu a::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2.5px;background:var(--black);transition:left .25s,right .25s;}
+.overlay-menu a:hover::after{left:0;right:0;}
+.overlay-menu a.active-page::after{left:0;right:0;}
+.nav-dropdown a::after{display:none;}
+.nav-item{cursor:pointer;text-align:center;width:100%;}
+.nav-item-label svg{transition:transform .25s;flex-shrink:0;width:16px;height:16px;}
+.nav-item.open .nav-item-label svg{transform:rotate(180deg);}
+.nav-dropdown{display:none;flex-direction:column;align-items:center;gap:4px;padding:8px 0 4px;}
+.nav-item.open .nav-dropdown{display:flex;}
+#overlayMenu .nav-dropdown a{font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;text-transform:uppercase;letter-spacing:.15em;text-decoration:none;color:var(--gray);padding:8px 28px;border-radius:4px;transition:color .2s,background .2s;}
+#overlayMenu .nav-dropdown a:hover{color:var(--black);background:rgba(0,0,0,.05);}
+
+/* ── LAYOUT ── */
+main{flex:1;padding-top:60px;position:relative;z-index:1;display:flex;flex-direction:column;transition:margin-left .35s cubic-bezier(.25,1,.5,1),width .35s cubic-bezier(.25,1,.5,1);}
+body.menu-open main{margin-left:50%;width:50%;}
+.page-wrap{display:flex;flex-direction:column;align-items:center;padding:0 48px 64px;}
+
+.sticky-title-bar{position:sticky;top:60px;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);text-align:center;padding:40px 48px 20px;width:100vw;margin-left:calc(-50vw + 50%);}
+.sticky-title-bar .section-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:8px;}
+.sticky-title-bar .section-title{font-size:clamp(24px,4.5vw,42px);font-weight:900;letter-spacing:.05em;line-height:1.1;margin:0;}
+
+.content-wide{width:100%;max-width:920px;margin-top:32px;}
+
+/* ── UPCOMING STRIP ── */
+.upcoming-label{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
+.upcoming-strip{display:flex;gap:12px;overflow-x:auto;padding-bottom:14px;margin-bottom:36px;border-bottom:1px solid var(--border);scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
+.upcoming-strip::-webkit-scrollbar{height:4px;}
+.upcoming-strip::-webkit-scrollbar-thumb{background:var(--border);}
+.upcoming-chip{flex-shrink:0;display:flex;flex-direction:column;gap:6px;padding:12px 16px;border:1.5px solid var(--black);background:#fff;cursor:pointer;transition:background .2s,color .2s;min-width:150px;}
+.upcoming-chip:hover{background:var(--black);color:#fff;}
+.upcoming-chip:hover .chip-loc{color:rgba(255,255,255,.65);}
+.chip-date{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.chip-title{font-size:13px;font-weight:600;letter-spacing:.02em;line-height:1.3;}
+.chip-loc{font-size:10px;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;transition:color .2s;}
+
+/* ── MONTH TABS ── */
+.month-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.month-tabs::-webkit-scrollbar{display:none;}
+.month-tab{padding:12px 20px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;color:var(--gray);white-space:nowrap;transition:all .2s;margin-bottom:-1px;flex-shrink:0;}
+.month-tab.active{color:var(--black);border-bottom-color:var(--black);}
+.month-tab:hover:not(.active){color:var(--black);}
+
+.cal-toprow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:18px 0 20px;}
+.today-btn{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;background:transparent;border:1.5px solid var(--black);color:var(--black);cursor:pointer;transition:all .2s;}
+.today-btn:hover{background:var(--black);color:#fff;}
+
+.legend{display:flex;flex-wrap:wrap;gap:16px;}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);}
+.mk{font-size:13px;line-height:1;color:var(--black);display:inline-block;width:14px;text-align:center;}
+
+/* ── CALENDAR GRID ── */
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-top:24px;}
+.cal-weekdays span{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);text-align:center;padding-bottom:10px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.day-cell{background:#fff;min-height:84px;padding:8px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:background .15s;position:relative;}
+.day-cell.empty{cursor:default;background:var(--faint);}
+.day-cell:not(.empty):hover{background:var(--faint);}
+.day-cell.selected{background:var(--black);}
+.day-cell.selected .day-num{color:#fff;}
+.day-cell.selected .mk{color:#fff;}
+.day-num{font-size:13px;font-weight:600;}
+.day-cell.is-today .day-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--black);}
+.day-cell.selected.is-today .day-num{border-color:#fff;}
+.day-markers{display:flex;gap:3px;flex-wrap:wrap;margin-top:auto;}
+
+/* ── AGENDA PANEL ── */
+.agenda-panel{margin-top:36px;padding-top:28px;border-top:1px solid var(--border);}
+.agenda-date{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:16px;}
+.agenda-list{display:flex;flex-direction:column;gap:14px;}
+.event-card{border:1.5px solid var(--black);padding:16px 18px;display:flex;gap:14px;align-items:flex-start;}
+.event-card .mk{font-size:17px;margin-top:1px;}
+.event-body{display:flex;flex-direction:column;gap:5px;}
+.event-title{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+.event-time{font-size:12px;font-weight:600;letter-spacing:.06em;}
+.event-loc{font-size:11.5px;color:var(--gray);letter-spacing:.03em;}
+.event-note{font-size:11.5px;font-style:italic;color:var(--gray);}
+.event-card.closed{border-style:dashed;border-color:var(--gray);opacity:.75;}
+.event-card.closed .event-title{text-decoration:line-through;text-decoration-color:var(--gray);}
+.agenda-empty{font-size:13px;color:var(--gray);padding:6px 0 2px;line-height:1.7;}
+
+/* ── FOOTER ── */
+.site-footer{transition:margin-left .35s cubic-bezier(.25,1,.5,1),width .35s cubic-bezier(.25,1,.5,1);font-size:12px;letter-spacing:.02em;}
+body.menu-open .site-footer{margin-left:50%;width:50%;}
+.footer-legal{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.footer-legal a{font-family:'Poppins',sans-serif;font-size:12px;letter-spacing:.02em;color:rgba(0,0,0,.55);text-decoration:underline;text-decoration-color:rgba(0,0,0,.25);transition:color .2s;white-space:nowrap;}
+.footer-legal a:hover{color:var(--black);}
+.footer-copy{font-family:'Poppins',sans-serif;font-size:12px;letter-spacing:.02em;color:rgba(0,0,0,.45);white-space:nowrap;}
+
+@media(max-width:900px){
+  nav{padding:18px 20px;}
+  .page-wrap{padding:0 24px 52px;}
+  .sticky-title-bar{padding:30px 24px 16px;}
+  .overlay-menu{padding-top:100px;}
+}
+@media(max-width:600px){
+  nav{padding:16px 16px;}
+  .page-wrap{padding:0 16px 44px;}
+  .sticky-title-bar{padding:24px 16px 12px;top:57px;}
+  body.menu-open main{margin-left:0;width:100%;}
+  body.menu-open .site-footer{margin-left:0;width:100%;}
+  .overlay-menu{width:100%;padding:90px 16px 40px;border-right:none;}
+  .day-cell{min-height:62px;padding:6px;}
+  .day-num{font-size:12px;}
+  .mk{font-size:11px;width:11px;}
+  .event-card{padding:13px 14px;gap:10px;}
+  .site-footer{flex-direction:column;align-items:center;text-align:center;padding:20px 16px;}
+  .site-footer div{justify-content:center;}
+}
+@media(max-width:400px){
+  .day-cell{min-height:52px;}
+  .upcoming-chip{min-width:130px;padding:10px 12px;}
+}
+</style>
+</head>
+<body>
+<nav id="mainNavbar">
+  <div class="nav-top-row">
+    <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="de">DE</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/danersbeefbread?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@daners_beefbread?_r=1&_t=ZS-96MZFXNPeF8" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://open.spotify.com/user/31u5ibsrqur55jybbsljsm7suoyu?si=VGXnb-StS5Gnb2uL0RIUCg" target="_blank" rel="noopener" aria-label="Spotify"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 1 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257C14.1 12.266 10.539 11.88 7.24 12.854a.78.78 0 0 1-.453-1.49c3.757-1.142 7.708-.588 10.765 1.266a.78.78 0 0 1 .257 1.072zm.105-2.835C14.69 9.15 9.948 8.994 7.188 9.843a.936.936 0 1 1-.543-1.79c3.181-.967 8.47-.78 11.81 1.17a.936.936 0 0 1-.541 1.644z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="overlay-menu" id="overlayMenu">
+  <div class="overlay-inner-content">
+    <a href="index.html" data-i18n="fhome">Home</a>
+    <a href="menu.html" data-i18n="nav-menu">Menü</a>
+    <div class="nav-item" id="navLocItem">
+      <div class="nav-item-label">
+        <span data-i18n="nav-locations">Locations</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="nav-dropdown">
+        <a href="isemarkt.html" data-i18n="nav-isemarkt">Isemarkt</a>
+        <a href="susi.html" data-i18n="nav-susi">Sternschanze</a>
+      </div>
+    </div>
+    <a href="findus.html" data-i18n="nav-findus" class="active-page">Findet uns</a>
+    <a href="jobs.html" data-i18n="nav-jobs">Jobs</a>
+    <a href="contact.html" data-i18n="nav-contact">Kontakt</a>
+    <a href="about.html" data-i18n="nav-about">Über uns</a>
+  </div>
+</div>
+
+<main>
+  <div class="sticky-title-bar">
+    <h1 class="section-title" data-i18n="cal-title">FINDET UNS</h1>
+    <p class="section-label" data-i18n="cal-label">WO WIR 2026 UNTERWEGS SIND</p>
+  </div>
+
+  <div class="page-wrap" style="padding-top:28px;">
+    <div class="content-wide">
+
+      <p class="upcoming-label" data-i18n="cal-upcoming">NÄCHSTE TERMINE</p>
+      <div class="upcoming-strip" id="upcomingStrip"></div>
+
+      <div class="month-tabs" id="monthTabs"></div>
+
+      <div class="cal-toprow">
+        <div class="legend" id="legend">
+          <span class="legend-item"><span class="mk">●</span><span data-i18n="cal-legend-market">Isemarkt</span></span>
+          <span class="legend-item"><span class="mk">◆</span><span data-i18n="cal-legend-festival">Event / Festival</span></span>
+          <span class="legend-item"><span class="mk">▲</span><span data-i18n="cal-legend-pride">CSD</span></span>
+          <span class="legend-item"><span class="mk">✦</span><span data-i18n="cal-legend-christmas">Weihnachtsmarkt</span></span>
+        </div>
+        <button class="today-btn" id="todayBtn" data-i18n="cal-today">HEUTE</button>
+      </div>
+
+      <div class="cal-weekdays" id="calWeekdays"></div>
+      <div class="cal-grid" id="calGrid"></div>
+
+      <div class="agenda-panel">
+        <p class="agenda-date" id="agendaDate"></p>
+        <div class="agenda-list" id="agendaList"></div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="border-top:1px solid var(--border);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+  <div class="footer-legal">
+    <a href="imprint.html" data-i18n="f-imprint">Impressum</a>
+    <a href="privacy.html" data-i18n="f-privacy">Datenschutz</a>
+  </div>
+  <span class="footer-copy" data-i18n="fcopy">&copy; 2026 DANERS &ndash; Beef &amp; Bread GmbH</span>
+</footer>
+
+<script>
+/* ══════════════════ NAV / MENU (shared behaviour) ══════════════════ */
+const menuBtn=document.getElementById('menuBtn');
+const overlayMenu=document.getElementById('overlayMenu');
+const mainNavbar=document.getElementById('mainNavbar');
+function closeMenu(){overlayMenu.classList.remove('open');menuBtn.classList.remove('open');mainNavbar.classList.remove('open');document.body.classList.remove('menu-open');document.body.style.overflow='';}
+menuBtn.addEventListener('click',()=>{
+  const o=overlayMenu.classList.toggle('open');
+  menuBtn.classList.toggle('open',o);
+  mainNavbar.classList.toggle('open',o);
+  document.body.classList.toggle('menu-open',o);
+  const isMobile=window.matchMedia('(max-width:600px)').matches;
+  document.body.style.overflow=(o&&isMobile)?'hidden':'';
+});
+overlayMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlayMenu.classList.contains('open'))closeMenu();});
+const navLocItem=document.getElementById('navLocItem');
+if(navLocItem)navLocItem.querySelector('.nav-item-label').addEventListener('click',()=>navLocItem.classList.toggle('open'));
+
+/* ══════════════════ DATE HELPERS ══════════════════ */
+function pad(n){return String(n).padStart(2,'0');}
+function toISO(y,m,d){return `${y}-${pad(m+1)}-${pad(d)}`;}
+function todayISO(){const t=new Date();return toISO(t.getFullYear(),t.getMonth(),t.getDate());}
+function dateRange(startStr,endStr){
+  const out=[];
+  const start=new Date(startStr+'T00:00:00');
+  const end=new Date(endStr+'T00:00:00');
+  for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
+    out.push(toISO(d.getFullYear(),d.getMonth(),d.getDate()));
+  }
+  return out;
+}
+
+/* ══════════════════ EVENT DATA ══════════════════ */
+const events=[];
+
+const ISEMARKT_DATES=[
+  '2026-07-14','2026-07-17','2026-07-21','2026-07-24','2026-07-28','2026-07-31',
+  '2026-08-04','2026-08-11','2026-08-18','2026-08-25',
+  '2026-09-01','2026-09-08','2026-09-15','2026-09-22','2026-09-29',
+  '2026-10-06','2026-10-13','2026-10-20','2026-10-27',
+  '2026-11-03','2026-11-10','2026-11-17','2026-11-24',
+  '2026-12-01','2026-12-08','2026-12-15','2026-12-22','2026-12-29'
+];
+ISEMARKT_DATES.forEach(d=>events.push({
+  date:d,category:'market',mk:'●',
+  title:'DANERS am Isemarkt',titleEn:'DANERS at Isemarkt',
+  location:'Isemarkt · Isestraße, 20149 Hamburg',
+  time:'09:00–14:00'
+}));
+
+// Old But Gold – Hip Hop Festival
+events.push({
+  date:'2026-07-25',category:'festival',mk:'◆',
+  title:'Old But Gold – Hip Hop Festival',titleEn:'Old But Gold – Hip Hop Festival',
+  location:'MS Dockville · Schlengendeich 12',
+  time:'12:00–22:00'
+});
+
+// CSD Hamburg
+['2026-07-31','2026-08-01','2026-08-02'].forEach(d=>events.push({
+  date:d,category:'pride',mk:'▲',
+  title:'CSD Hamburg',titleEn:'CSD Hamburg (Pride)',
+  location:'Jungfernstieg, Hamburg',
+  note:'Programmzeiten siehe CSD Hamburg',noteEn:'See CSD Hamburg for program times'
+}));
+
+// Eppendorfer Achtel – Weinfest
+events.push({date:'2026-08-14',category:'festival',mk:'◆',title:'Eppendorfer Achtel – Weinfest',titleEn:'Eppendorfer Achtel – Wine Festival',location:'Eppendorfer Landstraße, 20249 Hamburg',time:'18:00–23:30'});
+events.push({date:'2026-08-15',category:'festival',mk:'◆',title:'Eppendorfer Achtel – Weinfest',titleEn:'Eppendorfer Achtel – Wine Festival',location:'Eppendorfer Landstraße, 20249 Hamburg',time:'11:00–23:30'});
+events.push({date:'2026-08-16',category:'festival',mk:'◆',title:'Eppendorfer Achtel – Weinfest',titleEn:'Eppendorfer Achtel – Wine Festival',location:'Eppendorfer Landstraße, 20249 Hamburg',time:'11:00–20:00'});
+
+// Vive le Vin
+['2026-08-27','2026-08-28','2026-08-29','2026-08-30'].forEach(d=>events.push({
+  date:d,category:'festival',mk:'◆',
+  title:'Vive le Vin',titleEn:'Vive le Vin',
+  location:'Stadthöfe · Große Bleichen 35, 20354 Hamburg',
+  note:'Zeiten siehe Veranstalter',noteEn:'Times per organizer'
+}));
+
+// Winterhuder Straßenfest
+['2026-09-05','2026-09-06'].forEach(d=>events.push({
+  date:d,category:'festival',mk:'◆',
+  title:'Winterhuder Straßenfest',titleEn:'Winterhude Street Festival',
+  location:'Winterhude, Hamburg',
+  note:'Zeiten siehe Veranstalter',noteEn:'Times per organizer'
+}));
+
+// Flohmarkt Museum der Arbeit
+events.push({date:'2026-10-03',category:'festival',mk:'◆',title:'Flohmarkt',titleEn:'Flea Market',location:'Museum der Arbeit, Hamburg',time:'08:00–18:00'});
+
+// HYROX Hamburg
+['2026-10-28','2026-10-29','2026-10-30','2026-10-31','2026-11-01'].forEach(d=>events.push({
+  date:d,category:'festival',mk:'◆',
+  title:'HYROX Hamburg',titleEn:'HYROX Hamburg',
+  location:'Hamburg Messe',
+  note:'Zeiten siehe Veranstalter',noteEn:'Times per organizer'
+}));
+
+// Marché de Noël – Weihnachtsmarkt (hours per official Standplatzanmeldung 2026)
+dateRange('2026-11-12','2026-12-23').forEach(dateStr=>{
+  const wd=new Date(dateStr+'T00:00:00').getDay(); // 0=Sun..6=Sat, 1=Mon
+  if(dateStr==='2026-11-15'){
+    events.push({date:dateStr,category:'christmas',mk:'✦',closed:true,
+      title:'Marché de Noël – Weihnachtsmarkt',titleEn:'Marché de Noël – Christmas Market',
+      location:'Stadthöfe (Bleichenhof) · Große Bleichen 35, 20354 Hamburg',
+      note:'Geschlossen – Volkstrauertag',noteEn:'Closed – Volkstrauertag (Remembrance Day)'});
+    return;
+  }
+  if(dateStr==='2026-11-22'){
+    events.push({date:dateStr,category:'christmas',mk:'✦',closed:true,
+      title:'Marché de Noël – Weihnachtsmarkt',titleEn:'Marché de Noël – Christmas Market',
+      location:'Stadthöfe (Bleichenhof) · Große Bleichen 35, 20354 Hamburg',
+      note:'Geschlossen – Totensonntag',noteEn:'Closed – Totensonntag (Sunday of the Dead)'});
+    return;
+  }
+  let time;
+  if(dateStr==='2026-12-23') time='12:00–18:00';
+  else if(wd===1) time='15:00–22:00';
+  else time='12:00–22:00';
+  events.push({date:dateStr,category:'christmas',mk:'✦',
+    title:'Marché de Noël – Weihnachtsmarkt',titleEn:'Marché de Noël – Christmas Market',
+    location:'Stadthöfe (Bleichenhof) · Große Bleichen 35, 20354 Hamburg',
+    time});
+});
+
+// Weihnachtsbummel
+dateRange('2026-11-20','2026-12-30').forEach(dateStr=>events.push({
+  date:dateStr,category:'christmas',mk:'✦',
+  title:'Weihnachtsbummel',titleEn:'Weihnachtsbummel (Christmas Stroll)',
+  location:'Marie-Jonas-Platz, Hamburg',
+  note:'Zeiten siehe Veranstalter',noteEn:'Times per organizer'
+}));
+
+/* group events by date */
+const eventsByDate={};
+events.forEach(e=>{(eventsByDate[e.date]=eventsByDate[e.date]||[]).push(e);});
+const sortedEvents=events.slice().sort((a,b)=>a.date.localeCompare(b.date));
+
+/* ══════════════════ CALENDAR STATE ══════════════════ */
+const MONTHS=[
+  {year:2026,month:6},{year:2026,month:7},{year:2026,month:8},
+  {year:2026,month:9},{year:2026,month:10},{year:2026,month:11}
+];
+const MONTH_LABELS={de:['JULI','AUGUST','SEPTEMBER','OKTOBER','NOVEMBER','DEZEMBER'],en:['JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER']};
+const MONTH_LABELS_SHORT={de:['Jul','Aug','Sep','Okt','Nov','Dez'],en:['Jul','Aug','Sep','Oct','Nov','Dec']};
+const WEEKDAYS={de:['MO','DI','MI','DO','FR','SA','SO'],en:['MO','TU','WE','TH','FR','SA','SU']};
+
+let currentLang=localStorage.getItem('daners_lang')||'de';
+let activeMonthIndex=0;
+let selectedDate=null;
+
+function findMonthIndexForDate(dateStr){
+  const y=+dateStr.slice(0,4), m=+dateStr.slice(5,7)-1;
+  return MONTHS.findIndex(mm=>mm.year===y&&mm.month===m);
+}
+
+/* pick a sensible initial state: today if within range, else first upcoming event, else July */
+(function initState(){
+  const t=todayISO();
+  const idxToday=findMonthIndexForDate(t);
+  if(idxToday>-1){
+    activeMonthIndex=idxToday;
+    selectedDate=t;
+  } else {
+    const next=sortedEvents.find(e=>e.date>=t) || sortedEvents[0];
+    selectedDate=next?next.date:'2026-07-01';
+    activeMonthIndex=Math.max(findMonthIndexForDate(selectedDate),0);
+  }
+})();
+
+/* ══════════════════ RENDER: MONTH TABS ══════════════════ */
+function renderMonthTabs(){
+  const wrap=document.getElementById('monthTabs');
+  wrap.innerHTML='';
+  MONTHS.forEach((m,i)=>{
+    const btn=document.createElement('button');
+    btn.className='month-tab'+(i===activeMonthIndex?' active':'');
+    btn.textContent=MONTH_LABELS[currentLang][i];
+    btn.addEventListener('click',()=>{activeMonthIndex=i;renderAll();});
+    wrap.appendChild(btn);
+  });
+}
+
+/* ══════════════════ RENDER: WEEKDAY HEADER ══════════════════ */
+function renderWeekdays(){
+  const wrap=document.getElementById('calWeekdays');
+  wrap.innerHTML='';
+  WEEKDAYS[currentLang].forEach(w=>{
+    const s=document.createElement('span');s.textContent=w;wrap.appendChild(s);
+  });
+}
+
+/* ══════════════════ RENDER: CALENDAR GRID ══════════════════ */
+function renderGrid(){
+  const {year,month}=MONTHS[activeMonthIndex];
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML='';
+  const firstDay=new Date(year,month,1).getDay();
+  const offset=(firstDay+6)%7;
+  const totalDays=new Date(year,month+1,0).getDate();
+  const t=todayISO();
+
+  for(let i=0;i<offset;i++){
+    const empty=document.createElement('div');
+    empty.className='day-cell empty';
+    grid.appendChild(empty);
+  }
+  for(let day=1;day<=totalDays;day++){
+    const dateStr=toISO(year,month,day);
+    const cell=document.createElement('div');
+    cell.className='day-cell';
+    if(dateStr===t) cell.classList.add('is-today');
+    if(dateStr===selectedDate) cell.classList.add('selected');
+
+    const num=document.createElement('span');
+    num.className='day-num';
+    num.textContent=day;
+    cell.appendChild(num);
+
+    const dayEvents=(eventsByDate[dateStr]||[]).filter(e=>!e.closed);
+    if(dayEvents.length){
+      const markers=document.createElement('div');
+      markers.className='day-markers';
+      const seen=new Set();
+      dayEvents.forEach(e=>{
+        if(seen.has(e.category))return;
+        seen.add(e.category);
+        const mk=document.createElement('span');
+        mk.className='mk';
+        mk.textContent=e.mk;
+        markers.appendChild(mk);
+      });
+      cell.appendChild(markers);
+    }
+
+    cell.addEventListener('click',()=>{selectedDate=dateStr;renderGrid();renderAgenda();});
+    grid.appendChild(cell);
+  }
+}
+
+/* ══════════════════ RENDER: UPCOMING STRIP ══════════════════ */
+function renderUpcoming(){
+  const wrap=document.getElementById('upcomingStrip');
+  wrap.innerHTML='';
+  const t=todayISO();
+  const seenDates=new Set();
+  const upcoming=[];
+  for(const e of sortedEvents){
+    if(e.date<t || e.closed) continue;
+    if(seenDates.has(e.date+e.title)) continue;
+    seenDates.add(e.date+e.title);
+    upcoming.push(e);
+    if(upcoming.length>=8) break;
+  }
+  if(!upcoming.length){
+    wrap.style.display='none';
+    return;
+  }
+  wrap.style.display='flex';
+  upcoming.forEach(e=>{
+    const chip=document.createElement('div');
+    chip.className='upcoming-chip';
+    const d=new Date(e.date+'T00:00:00');
+    const dLabel=`${pad(d.getDate())}. ${MONTH_LABELS_SHORT[currentLang][findMonthIndexForDate(e.date)]}`;
+    chip.innerHTML=`<span class="chip-date">${dLabel}</span><span class="chip-title">${currentLang==='en'?e.titleEn:e.title}</span><span class="chip-loc">${e.location}</span>`;
+    chip.addEventListener('click',()=>{
+      selectedDate=e.date;
+      activeMonthIndex=findMonthIndexForDate(e.date);
+      renderAll();
+      document.getElementById('calGrid').scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    wrap.appendChild(chip);
+  });
+}
+
+/* ══════════════════ RENDER: AGENDA ══════════════════ */
+function formatAgendaDate(dateStr){
+  const d=new Date(dateStr+'T00:00:00');
+  const weekdaysFull={de:['SONNTAG','MONTAG','DIENSTAG','MITTWOCH','DONNERSTAG','FREITAG','SAMSTAG'],en:['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY']};
+  const wd=weekdaysFull[currentLang][d.getDay()];
+  const monthLabel=MONTH_LABELS[currentLang][findMonthIndexForDate(dateStr)]||'';
+  return `${wd}, ${d.getDate()}. ${monthLabel} ${d.getFullYear()}`;
+}
+
+function renderAgenda(){
+  document.getElementById('agendaDate').textContent=formatAgendaDate(selectedDate);
+  const list=document.getElementById('agendaList');
+  list.innerHTML='';
+  const dayEvents=eventsByDate[selectedDate]||[];
+  if(!dayEvents.length){
+    const empty=document.createElement('p');
+    empty.className='agenda-empty';
+    empty.textContent=currentLang==='en'
+      ?'No events on this day. Check the dots on the calendar above, or browse upcoming dates.'
+      :'An diesem Tag sind keine Termine geplant. Schau auf die Markierungen im Kalender oben oder in die nächsten Termine.';
+    list.appendChild(empty);
+    return;
+  }
+  dayEvents.forEach(e=>{
+    const card=document.createElement('div');
+    card.className='event-card'+(e.closed?' closed':'');
+    const body=document.createElement('div');
+    body.className='event-body';
+    const title=document.createElement('span');
+    title.className='event-title';
+    title.textContent=currentLang==='en'?e.titleEn:e.title;
+    body.appendChild(title);
+    if(e.time){
+      const time=document.createElement('span');
+      time.className='event-time';
+      time.textContent=e.time+' Uhr';
+      body.appendChild(time);
+    }
+    const loc=document.createElement('span');
+    loc.className='event-loc';
+    loc.textContent=e.location;
+    body.appendChild(loc);
+    if(e.note||e.noteEn){
+      const note=document.createElement('span');
+      note.className='event-note';
+      note.textContent=currentLang==='en'?(e.noteEn||e.note):(e.note||e.noteEn);
+      body.appendChild(note);
+    }
+    const mk=document.createElement('span');
+    mk.className='mk';
+    mk.textContent=e.mk;
+    card.appendChild(mk);
+    card.appendChild(body);
+    list.appendChild(card);
+  });
+}
+
+/* ══════════════════ TODAY BUTTON ══════════════════ */
+document.getElementById('todayBtn').addEventListener('click',()=>{
+  const t=todayISO();
+  const idx=findMonthIndexForDate(t);
+  if(idx>-1){
+    activeMonthIndex=idx;
+    selectedDate=t;
+  } else {
+    const next=sortedEvents.find(e=>e.date>=t)||sortedEvents[0];
+    selectedDate=next?next.date:selectedDate;
+    activeMonthIndex=findMonthIndexForDate(selectedDate);
+  }
+  renderAll();
+});
+
+/* ══════════════════ MASTER RENDER ══════════════════ */
+function renderAll(){
+  renderMonthTabs();
+  renderWeekdays();
+  renderGrid();
+  renderUpcoming();
+  renderAgenda();
+}
+renderAll();
+
+/* ══════════════════ TRANSLATIONS (nav / chrome) ══════════════════ */
+const translations={
+  "de":{
+    "nav-menu":"Menü","nav-locations":"Locations","nav-findus":"Findet uns","nav-jobs":"Jobs","nav-contact":"Kontakt","nav-isemarkt":"Isemarkt","nav-susi":"Sternschanze","nav-about":"Über uns",
+    "fhome":"Home","fcopy":"© 2026 DANERS – Beef & Bread GmbH","f-imprint":"Impressum","f-privacy":"Datenschutz",
+    "cal-title":"FINDET UNS","cal-label":"WO WIR 2026 UNTERWEGS SIND",
+    "cal-upcoming":"NÄCHSTE TERMINE","cal-today":"HEUTE",
+    "cal-legend-market":"Isemarkt","cal-legend-festival":"Event / Festival","cal-legend-pride":"CSD","cal-legend-christmas":"Weihnachtsmarkt"
+  },
+  "en":{
+    "nav-menu":"Menu","nav-locations":"Locations","nav-findus":"Find Us","nav-jobs":"Jobs","nav-contact":"Contact","nav-isemarkt":"Isemarkt","nav-susi":"Sternschanze","nav-about":"About Us",
+    "fhome":"Home","fcopy":"© 2026 DANERS – Beef & Bread GmbH","f-imprint":"Imprint","f-privacy":"Data Privacy",
+    "cal-title":"FIND US","cal-label":"WHERE WE ARE IN 2026",
+    "cal-upcoming":"UPCOMING DATES","cal-today":"TODAY",
+    "cal-legend-market":"Isemarkt","cal-legend-festival":"Event / Festival","cal-legend-pride":"CSD","cal-legend-christmas":"Christmas Market"
+  }
+};
+
+function applyLang(lang){
+  currentLang=lang;
+  localStorage.setItem('daners_lang',lang);
+  const t=translations[lang]||{};
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(t[k]!=null)el.textContent=t[k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  document.documentElement.lang=lang;
+  renderAll();
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+applyLang(currentLang);
+</script>
+</body>
+</html>
